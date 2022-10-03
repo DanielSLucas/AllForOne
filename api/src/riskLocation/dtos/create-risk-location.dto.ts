@@ -1,7 +1,7 @@
 export interface CreateRiskLocationDTO {
   coords: {
-    x: number;
-    y: number;
+    lat: number;
+    long: number;
   };
   radius: number;
   risk: string;
