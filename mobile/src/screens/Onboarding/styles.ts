@@ -33,6 +33,11 @@ export const styles = StyleSheet.create({
     left: 50,
   },
    
+  nextButton: {
+    position: "absolute",
+    right: 60,
+    bottom: 50,
+  },
 
   // slide: {
   //   flex: 1,

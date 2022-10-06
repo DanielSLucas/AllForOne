@@ -33,4 +33,5 @@ export const styles = StyleSheet.create({
     fontSize: 24,
     color: THEME.COLORS.TEXT.TITLE,
   },
+
 });
