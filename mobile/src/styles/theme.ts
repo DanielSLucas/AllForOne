@@ -13,7 +13,7 @@ export const THEME = {
     // CAPTION_400: '#A1A1AA',
     // CAPTION_300: '#D4D4D8',
 
-    // SHAPE: '#2A2634',
+    SHAPE: 'rgba(0,0,0,0.2)',
 
     PURPLE: '#512D6D',
     RED: '#F8485E',
@@ -28,7 +28,8 @@ export const THEME = {
     // SUCCESS: '#34D399',
     // ALERT: '#F87171',
 
-    // FOOTER: ['rgba(0,0,0,0)', 'rgba(0,0,0,0.9)'],
+    GRADIENT: ['#512D6D', '#F8485E'],
+    GRADIENT_REVERSE: ['#F8485E', '#512D6D'],
     // OVERLAY: 'rgba(0,0,0,0.6)',
   },
 
@@ -43,6 +44,7 @@ export const THEME = {
     SM: 16,
     MD: 20, 
     LG: 24,
-    XL: 32
+    XL: 32,
+    XXL: 40,
   }
 };
