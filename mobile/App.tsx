@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import * as SplashScreen from 'expo-splash-screen';
 
