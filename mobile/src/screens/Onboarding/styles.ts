@@ -7,9 +7,8 @@ export const styles = StyleSheet.create({
     backgroundColor: THEME.COLORS.BACKGROUND,    
   },
 
-  swiper_wrapper:{
-    // flex: 1
-  }, 
+  swiper_wrapper:{}, 
+  
   swiper_dot: {
     backgroundColor: THEME.COLORS.SHAPE, 
     width: 6, 
@@ -20,12 +19,14 @@ export const styles = StyleSheet.create({
     marginTop: 3, 
     marginBottom: 3,
   },
+
   swiper_activeDot: {
     backgroundColor: THEME.COLORS.PURPLE, 
     width: 6, 
     height: 6, 
     borderRadius: 3,
   },
+
   swiper_pagination: {
     position: "absolute",
     bottom: 60,
@@ -39,16 +40,4 @@ export const styles = StyleSheet.create({
     bottom: 50,
   },
 
-  // slide: {
-  //   flex: 1,
-  //   alignItems: "center",
-  // },
-
-  // pageNumber: {
-  //   fontFamily: THEME.FONT_FAMILY.SEMI_BOLD,
-  //   fontSize: THEME.FONT_SIZE.XXL,
-  //   color: THEME.COLORS.TEXT.TITLE,
-  //   opacity: 0.2,
-  //   marginBottom: 20,
-  // },
 });
