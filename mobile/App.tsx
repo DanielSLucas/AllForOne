@@ -1,9 +1,9 @@
 import React, { useCallback, useEffect } from 'react';
-import { View } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import * as SplashScreen from 'expo-splash-screen';
 
 import { 
+  Nunito_400Regular,
   Nunito_600SemiBold, 
   Nunito_700Bold, 
   Nunito_800ExtraBold 
@@ -16,6 +16,7 @@ SplashScreen.preventAutoHideAsync();
 
 export default function App() {
   const [fontsLoaded] = useFonts({
+    Nunito_400Regular,
     Nunito_600SemiBold, 
     Nunito_700Bold, 
     Nunito_800ExtraBold,
@@ -27,8 +28,7 @@ export default function App() {
     }
   }, [fontsLoaded]);
   
-  if (!fontsLoaded) {
-    console.log('hi 1', fontsLoaded)
+  if (!fontsLoaded) {    
     return null;
   }
 

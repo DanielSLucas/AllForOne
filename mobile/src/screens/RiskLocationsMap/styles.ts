@@ -1,13 +1,14 @@
 import { StyleSheet } from 'react-native';
+import { THEME } from '../../styles/theme';
 
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: "#F2F3F5"
+    backgroundColor: THEME.COLORS.BACKGROUND
   },
   text: {
-    fontSize: 32
+    fontSize: THEME.FONT_SIZE.XL
   }
 });
