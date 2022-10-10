@@ -8,14 +8,11 @@ export class User {
   @Prop({ required: true })
   name: string;
 
-  @Prop({ required: false })
-  profilePicUrl: string;
-
-  @Prop({ required: true })
+  @Prop({ required: true, unique: true })
   cellphone: string;
 
   @Prop({ required: true })
-  emergencyContact: string;
+  eula: boolean;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
