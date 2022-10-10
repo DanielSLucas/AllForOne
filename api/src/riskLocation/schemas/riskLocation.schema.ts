@@ -1,5 +1,6 @@
-import { Prop, Schema, SchemaFactory, raw } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import mongoose, { Document } from 'mongoose';
+import { User } from 'src/users/schemas/user.schema';
 
 export type RiskLocationDocument = RiskLocation & Document;
 
@@ -23,13 +24,17 @@ export class RiskLocation {
   location: PointLocation;
 
   @Prop({ required: true })
-  radius: number;
-
-  @Prop({ required: true })
   risk: string;
 
   @Prop({ required: true })
   description: string;
+
+  @Prop({
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: true,
+  })
+  created_by: User;
 }
 
 export const RiskLocationSchema = SchemaFactory.createForClass(RiskLocation);

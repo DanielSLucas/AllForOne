@@ -3,7 +3,7 @@ export interface CreateRiskLocationDTO {
     lat: number;
     long: number;
   };
-  radius: number;
   risk: string;
   description: string;
+  created_by: string;
 }

@@ -20,13 +20,11 @@ export class RiskLocationsService {
 
   async create({
     coords,
-    radius,
     risk,
     description,
   }: CreateRiskLocationDTO): Promise<RiskLocationDocument> {
     const createdRiskLocation = new this.RiskLocationModel({
       location: new PointLocation(coords),
-      radius,
       risk,
       description,
     });
