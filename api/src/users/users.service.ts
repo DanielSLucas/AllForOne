@@ -1,6 +1,6 @@
 import { Model } from 'mongoose';
 
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 
 import { User, UserDocument } from './schemas/user.schema';
@@ -14,8 +14,14 @@ export class UsersService {
   ) {}
 
   async create(createUserDTO: CreateUserDTO): Promise<UserDocument> {
-    const createdUser = new this.userModel(createUserDTO);
-    return createdUser.save();
+    if (!createUserDTO.eula) {
+      throw new HttpException(
+        'To sign up, EULA must be accepted.',
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+
+    return this.userModel.create(createUserDTO);
   }
 
   async findAll(): Promise<UserDocument[]> {
