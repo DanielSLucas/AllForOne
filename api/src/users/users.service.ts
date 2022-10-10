@@ -27,4 +27,10 @@ export class UsersService {
   async findAll(): Promise<UserDocument[]> {
     return this.userModel.find();
   }
+
+  async findByCellphone(cellphone: string): Promise<UserDocument | null> {
+    return this.userModel.findOne({
+      cellphone,
+    });
+  }
 }
