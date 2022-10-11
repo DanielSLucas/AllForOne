@@ -1,6 +1,10 @@
 import { Model } from 'mongoose';
 
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 
 import { User, UserDocument } from './schemas/user.schema';
@@ -15,10 +19,7 @@ export class UsersService {
 
   async create(createUserDTO: CreateUserDTO): Promise<UserDocument> {
     if (!createUserDTO.eula) {
-      throw new HttpException(
-        'To sign up, EULA must be accepted.',
-        HttpStatus.BAD_REQUEST,
-      );
+      throw new BadRequestException('To sign up, EULA must be accepted.');
     }
 
     return this.userModel.create(createUserDTO);
@@ -29,8 +30,12 @@ export class UsersService {
   }
 
   async findByCellphone(cellphone: string): Promise<UserDocument | null> {
-    return this.userModel.findOne({
+    const user = await this.userModel.findOne({
       cellphone,
     });
+
+    if (!user) throw new NotFoundException('User not found');
+
+    return user;
   }
 }
