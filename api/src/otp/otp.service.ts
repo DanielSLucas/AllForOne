@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { UsersService } from 'src/users/users.service';
@@ -22,6 +22,18 @@ export class OtpService {
     const otp = await this.create(user._id);
 
     await this.otpProvider.sendOTP(user.cellphone, otp.password);
+  }
+
+  async findOtpByUserId(userId: string) {
+    const otp = await this.otpModel.findOne({
+      user: userId,
+    });
+
+    if (!otp) {
+      throw new NotFoundException('OTP not found!');
+    }
+
+    return otp;
   }
 
   async create(userId: string) {
