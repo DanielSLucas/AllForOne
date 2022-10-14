@@ -41,10 +41,18 @@ export const THEME = {
   },
 
   FONT_SIZE: {
+    XSM: 12,
     SM: 16,
     MD: 20, 
     LG: 24,
     XL: 32,
     XXL: 40,
-  }
+  },
+
+  BORDER_RADIUS: {
+    SM: 4,
+    MD: 8,
+    LG: 16,
+    XL: 20,
+  },
 };

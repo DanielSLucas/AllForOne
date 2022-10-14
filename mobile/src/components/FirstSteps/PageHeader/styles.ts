@@ -2,36 +2,18 @@ import { StyleSheet } from 'react-native';
 import { THEME } from '../../../styles/theme';
 
 export const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-  },
-  
-  header: {    
-    justifyContent: "center",
-    alignItems: "center",
-    width: "100%",
-    height: "45%",
-  },
-
-  main: {
-    justifyContent: "center",
-    height: "40%",
-    width: "80%",
-  },
-
   pageNumber: {
     fontFamily: THEME.FONT_FAMILY.SEMI_BOLD,
-    fontSize: 40,
+    fontSize: THEME.FONT_SIZE.XXL,
     color: THEME.COLORS.TEXT.TITLE,
     opacity: 0.2,
     marginBottom: 20,
+    marginRight: 12,
   },
 
-  description: {
+  content: {
     fontFamily: THEME.FONT_FAMILY.BOLD,
-    fontSize: 24,
+    fontSize: THEME.FONT_SIZE.XL,
     color: THEME.COLORS.TEXT.TITLE,
   },
-
 });

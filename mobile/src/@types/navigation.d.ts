@@ -1,7 +1,7 @@
 export declare global {
   namespace ReactNavigation {
     interface RootParamList {
-      onboarding: undefined;
+      firstSteps: undefined;
       riskLocationsMap: undefined;
     }
   }

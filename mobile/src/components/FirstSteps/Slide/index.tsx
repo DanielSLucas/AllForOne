@@ -12,21 +12,20 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { styles } from './styles';
 
 import { THEME } from '../../../styles/theme';
+import { ReactNode } from 'react';
 
 interface SlideProps {
   reverseGradient?: boolean;
   img: ImageSourcePropType;
   imgStyles: StyleProp<ImageStyle>,
-  pageNumber: number;
-  description: string;
+  children: ReactNode;
 }
 
 export function Slide({ 
   reverseGradient, 
   img,
   imgStyles,
-  pageNumber, 
-  description,
+  children
 }: SlideProps) {
   return (
     <View style={styles.container}>
@@ -42,12 +41,7 @@ export function Slide({
       </LinearGradient>
 
       <View style={styles.main}>
-        <Text style={styles.pageNumber}>
-          {String(pageNumber).padStart(2, '0')}.
-        </Text>
-        <Text style={styles.description}>
-          {description}
-        </Text>
+        {children}
       </View>
     </View>
   );

@@ -30,8 +30,7 @@ export const styles = StyleSheet.create({
   swiper_pagination: {
     position: "absolute",
     bottom: 60,
-    right: "auto",
-    left: 50,
+    marginHorizontal: "auto",
   },
    
   nextButton: {
@@ -39,5 +38,5 @@ export const styles = StyleSheet.create({
     right: 60,
     bottom: 50,
   },
-
+  
 });
