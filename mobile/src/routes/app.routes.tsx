@@ -5,6 +5,7 @@ import { RiskLocationsMap } from '../screens/RiskLocationsMap';
 
 import { AddLocationButton } from '../components/header/AddLocationButton';
 import { HeaderTitle } from '../components/header/HeaderTitle';
+import { SignUp } from '../screens/SignUp';
 
 const { Navigator, Screen } = createNativeStackNavigator();
 
@@ -25,6 +26,14 @@ export function AppRoutes() {
           headerTitleAlign: "center",
           headerTitle: (props) => <HeaderTitle {...props} title="Locais de Risco"/>,
           headerRight: () => <AddLocationButton />
+        }}
+      />
+      <Screen 
+        name='signUp' 
+        component={SignUp}
+        options={{
+          headerTitleAlign: "center",
+          headerTitle: (props) => <HeaderTitle {...props} title="Cadastro"/>,
         }}
       />
     </Navigator>

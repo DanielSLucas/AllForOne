@@ -4,7 +4,7 @@ import { THEME } from '../../styles/theme';
 export const styles = StyleSheet.create({
   container: {
     width: "100%",
-    maxHeight: 56,
+    height: 52,
 
     paddingVertical: 12,
 
