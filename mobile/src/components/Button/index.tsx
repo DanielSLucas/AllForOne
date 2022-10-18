@@ -1,5 +1,6 @@
 import { ReactNode, useState } from 'react';
 import { ActivityIndicator, Text, TouchableOpacity, TouchableOpacityProps, } from 'react-native';
+
 import { THEME } from '../../styles/theme';
 
 import { styles } from './styles';

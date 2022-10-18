@@ -6,6 +6,7 @@ import { RiskLocationsMap } from '../screens/RiskLocationsMap';
 import { AddLocationButton } from '../components/header/AddLocationButton';
 import { HeaderTitle } from '../components/header/HeaderTitle';
 import { SignUp } from '../screens/SignUp';
+import { SignIn } from '../screens/SignIn';
 
 const { Navigator, Screen } = createNativeStackNavigator();
 
@@ -34,6 +35,14 @@ export function AppRoutes() {
         options={{
           headerTitleAlign: "center",
           headerTitle: (props) => <HeaderTitle {...props} title="Cadastro"/>,
+        }}
+      />
+      <Screen 
+        name='signIn' 
+        component={SignIn}
+        options={{
+          headerTitleAlign: "center",
+          headerTitle: (props) => <HeaderTitle {...props} title="Entrar"/>,
         }}
       />
     </Navigator>

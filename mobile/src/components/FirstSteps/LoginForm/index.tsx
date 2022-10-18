@@ -12,9 +12,18 @@ export function LoginForm() {
   const [cellphone, setCellphone] = useState('');
   
   function handleSubmit() {
-    navigation.navigate('signUp', {
-      cellphone,
-    })
+    
+    const userAlreadyExists = (() => {
+      return true;
+    })();
+    
+    if(userAlreadyExists) {
+      navigation.navigate('signIn');  
+    } else {
+      navigation.navigate('signUp', {
+        cellphone,
+      });
+    }
   }
 
   return (

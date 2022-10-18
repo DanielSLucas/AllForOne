@@ -8,6 +8,7 @@ export declare global {
       firstSteps: undefined;
       riskLocationsMap: undefined;
       signUp: SignUpParams;
+      signIn: undefined;
     }
   }
 }
