@@ -6,6 +6,13 @@ export interface RiskLocationDetailsParams {
   riskLocationId: string;
 }
 
+export interface RiskLocationFormParams {
+  position: {
+    latitude: number;
+    longitude: number;
+  };
+}
+
 export declare global {
   namespace ReactNavigation {
     interface RootParamList {
@@ -14,6 +21,8 @@ export declare global {
       signUp: SignUpParams;
       signIn: undefined;
       riskLocationDetails: RiskLocationDetailsParams;
+      selectMapPosition: undefined;
+      riskLocationForm: RiskLocationFormParams;
     }
   }
 }

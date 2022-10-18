@@ -6,6 +6,7 @@ import { styles } from './styles';
 
 interface InputProps extends TextInputProps {
   label: string;
+  complementaryText?: string;
   isTel?: boolean;
   containerStyle?: StyleProp<ViewStyle>;
   error?: boolean;
@@ -13,7 +14,8 @@ interface InputProps extends TextInputProps {
 
 
 const Input: React.ForwardRefRenderFunction<TextInput, InputProps> = ({ 
-  label, 
+  label,
+  complementaryText,
   isTel, 
   containerStyle, 
   style,
@@ -33,9 +35,17 @@ const Input: React.ForwardRefRenderFunction<TextInput, InputProps> = ({
 
   return(
     <View style={[styles.container, containerStyle]}>
-      <Text style={styles.label}>
-        {label}
-      </Text>
+      <View style={styles.header}>
+        <Text style={styles.label}>
+          {label}
+        </Text>
+
+        {complementaryText && (
+          <Text style={styles.complementaryText}>
+            {complementaryText}
+          </Text>
+        )}
+      </View>
 
       { isTel
         ? (

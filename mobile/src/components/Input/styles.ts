@@ -12,11 +12,23 @@ export const styles = StyleSheet.create({
     borderWidth: 1,
   },
 
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'baseline',
+  },
+
   label: {
     fontFamily: THEME.FONT_FAMILY.SEMI_BOLD,
     fontSize: THEME.FONT_SIZE.SM,
     color: THEME.COLORS.TEXT.COMPLEMENTARY,
     marginBottom: 5
+  },
+
+  complementaryText: {
+    fontFamily: THEME.FONT_FAMILY.SEMI_BOLD,
+    fontSize: THEME.FONT_SIZE.XSM,
+    color: THEME.COLORS.TEXT.COMPLEMENTARY,
   },
 
   input: {

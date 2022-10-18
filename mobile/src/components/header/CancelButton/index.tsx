@@ -1,20 +1,20 @@
 import { TouchableOpacity } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import FeatherIcons from '@expo/vector-icons/Feather';
 
 import { THEME } from '../../../styles/theme';
-import { useNavigation } from '@react-navigation/native';
 
-export function AddLocationButton() {
+export function CancelButton() {
   const navigation = useNavigation();
 
   function handlePress() {
-    navigation.navigate('selectMapPosition');
+    navigation.navigate('riskLocationsMap');
   }
   
   return (
     <TouchableOpacity onPress={handlePress}>
       <FeatherIcons 
-        name="plus" 
+        name="x" 
         size={24} 
         color={THEME.COLORS.TEXT.COMPLEMENTARY}
       />

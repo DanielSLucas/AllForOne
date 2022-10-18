@@ -7,28 +7,12 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: THEME.COLORS.BACKGROUND
-  },  
+  },
+  
   map: {
     width: Dimensions.get('window').width,
     height: Dimensions.get('window').height,
   },
-  // footer: {
-  //   position: 'absolute',
-  //   left: 24,
-  //   right: 24,
-  //   bottom: 32,
-
-  //   backgroundColor: '#FFF',
-  //   borderRadius: 20,
-  //   height: 56,
-  //   paddingLeft: 24,
-
-  //   flexDirection: 'row',
-  //   justifyContent: 'space-between',
-  //   alignItems: 'center',
-
-  //   elevation: 3,
-  // },
 
   callForHelpButton: {
     position: 'absolute',    
@@ -37,7 +21,7 @@ export const styles = StyleSheet.create({
     width: 328,
     height: 56,
     backgroundColor: THEME.COLORS.RED,
-    borderRadius: 20,
+    borderRadius: THEME.BORDER_RADIUS.XL,
 
     justifyContent: 'center',
     alignItems: 'center',
@@ -54,7 +38,7 @@ export const styles = StyleSheet.create({
     height: 46,
     paddingHorizontal: 16,
     backgroundColor: 'rgba(255, 255, 255, 0.8)',
-    borderRadius: 16,
+    borderRadius: THEME.BORDER_RADIUS.LG,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',    
