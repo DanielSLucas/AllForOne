@@ -4,12 +4,15 @@ import MapView, { Marker, Callout, PROVIDER_GOOGLE } from 'react-native-maps';
 import * as Location from 'expo-location';
 import { RectButton } from 'react-native-gesture-handler';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import FeatherIcons from '@expo/vector-icons/Feather';
 
 import mapMarker from '../../images/mapMarker.png';
 
 import { styles } from './styles';
+import { useNavigation } from '@react-navigation/native';
 
 export function RiskLocationsMap() {
+  const navigation = useNavigation();
   const [location, setLocation] = useState<Location.LocationObject | null>(null);
 
   useEffect(() => {
@@ -26,6 +29,12 @@ export function RiskLocationsMap() {
   
   function handleCallForHelp() {
     Linking.openURL('tel:+POLICIA')
+  }  
+
+  function handleNavigateToRiskLocationDetails(riskLocationId: string) {
+    navigation.navigate('riskLocationDetails', {
+      riskLocationId,
+    });
   }
 
   return (
@@ -34,8 +43,8 @@ export function RiskLocationsMap() {
         provider={PROVIDER_GOOGLE}
         style={styles.map}
         initialRegion={{
-          latitude: location?.coords.latitude || 0,
-          longitude: location?.coords.longitude || 0,
+          latitude: location?.coords.latitude || -23.5759,
+          longitude: location?.coords.longitude || -46.6466,
           latitudeDelta: 0.008,
           longitudeDelta: 0.008,
         }}    
@@ -51,9 +60,14 @@ export function RiskLocationsMap() {
             longitude: -45.165675,
           }}
         >
-          <Callout tooltip>
+          <Callout tooltip onPress={() => handleNavigateToRiskLocationDetails('id')}>
             <View style={styles.calloutContainer}>
               <Text style={styles.calloutText} >Rua perigosa</Text>
+              <FeatherIcons 
+                name='chevron-right'
+                size={20}                           
+                style={styles.calloutIcon}
+              />
             </View>
           </Callout>
         </Marker>

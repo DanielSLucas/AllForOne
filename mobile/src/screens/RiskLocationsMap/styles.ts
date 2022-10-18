@@ -55,12 +55,19 @@ export const styles = StyleSheet.create({
     paddingHorizontal: 16,
     backgroundColor: 'rgba(255, 255, 255, 0.8)',
     borderRadius: 16,
+    flexDirection: 'row',
     justifyContent: 'center',
+    alignItems: 'center',    
   },
 
   calloutText: {
-    fontFamily: 'Nunito_700Bold',
-    color: '#0089a5',
-    fontSize: 14,
+    fontFamily: THEME.FONT_FAMILY.SEMI_BOLD,
+    fontSize: THEME.FONT_SIZE.SM,
+    color: THEME.COLORS.BLUE,
+    marginRight: 'auto',
   },
+
+  calloutIcon: {
+    color: THEME.COLORS.TEXT.TITLE,    
+  }
 });

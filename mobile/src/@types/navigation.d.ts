@@ -2,6 +2,10 @@ export interface SignUpParams {
   cellphone: string;
 }
 
+export interface RiskLocationDetailsParams {
+  riskLocationId: string;
+}
+
 export declare global {
   namespace ReactNavigation {
     interface RootParamList {
@@ -9,6 +13,7 @@ export declare global {
       riskLocationsMap: undefined;
       signUp: SignUpParams;
       signIn: undefined;
+      riskLocationDetails: RiskLocationDetailsParams;
     }
   }
 }
