@@ -11,6 +11,7 @@ import {
 import { useFonts } from 'expo-font';
 
 import { Routes } from './src/routes';
+import AppProvider from './src/hooks';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -33,9 +34,9 @@ export default function App() {
   }
 
   return (
-    <>      
+    <AppProvider>      
       <Routes />     
       <StatusBar style="dark" />
-    </>
+    </AppProvider>
   );  
 }

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Text, Linking, View } from 'react-native';
 import MapView, { Marker, Callout, PROVIDER_GOOGLE } from 'react-native-maps';
 import * as Location from 'expo-location';
@@ -10,20 +10,31 @@ import mapMarker from '../../images/mapMarker.png';
 
 import { styles } from './styles';
 import { useNavigation } from '@react-navigation/native';
+import { BuguerMenu } from '../../components/BuguerMenu';
 
 export function RiskLocationsMap() {
+  const mapRef=  useRef<MapView>(null);
   const navigation = useNavigation();
-  const [location, setLocation] = useState<Location.LocationObject | null>(null);
+  // const [location, setLocation] = useState<Location.LocationObject | null>(null);
 
   useEffect(() => {
-    (async () => {      
+    (async () => {     
       let { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== 'granted') {        
         return;
       }
-
+      
       let currentPosition = await Location.getCurrentPositionAsync({});
-      setLocation(currentPosition);
+      
+      mapRef.current?.animateCamera({
+        center: {
+          latitude: currentPosition.coords.latitude,
+          longitude: currentPosition.coords.longitude,
+        },
+        zoom: 15
+      }, { duration: 2000 });
+
+      // setLocation(currentPosition);
     })();
   }, []);
   
@@ -39,15 +50,11 @@ export function RiskLocationsMap() {
 
   return (
     <SafeAreaView style={styles.container}>
+      <BuguerMenu />
       <MapView 
+        ref={mapRef}
         provider={PROVIDER_GOOGLE}
-        style={styles.map}
-        initialRegion={{
-          latitude: location?.coords.latitude || -23.5759,
-          longitude: location?.coords.longitude || -46.6466,
-          latitudeDelta: 0.008,
-          longitudeDelta: 0.008,
-        }}    
+        style={styles.map}        
       >
         <Marker
           icon={mapMarker}

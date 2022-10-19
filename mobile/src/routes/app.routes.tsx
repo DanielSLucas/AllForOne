@@ -11,6 +11,8 @@ import { RiskLocationForm } from '../screens/CreateRiskLocation/RiskLocationForm
 import { AddLocationButton } from '../components/header/AddLocationButton';
 import { HeaderTitle } from '../components/header/HeaderTitle';
 import { CancelButton } from '../components/header/CancelButton';
+import { BurguerMenuButton } from '../components/header/BurguerMenuButton';
+import { Forum } from '../screens/Forum';
 
 const { Navigator, Screen } = createNativeStackNavigator();
 
@@ -30,6 +32,7 @@ export function AppRoutes() {
           headerBackButtonMenuEnabled: false,
           headerBackVisible: false,
           headerTitleAlign: "center",
+          headerLeft: () => <BurguerMenuButton />,
           headerTitle: (props) => <HeaderTitle {...props} title="Locais de Risco"/>,
           headerRight: () => <AddLocationButton />
         }}
@@ -78,6 +81,18 @@ export function AppRoutes() {
           headerTitleAlign: "center",
           headerTitle: (props) => <HeaderTitle {...props} title="Adicionar local de risco"/>,
           headerRight: () => <CancelButton />
+        }}
+      />
+
+      <Screen
+        name='forum' 
+        component={Forum}        
+        options={{          
+          headerBackButtonMenuEnabled: false,
+          headerBackVisible: false,
+          headerTitleAlign: "center",
+          headerLeft: () => <BurguerMenuButton />,
+          headerTitle: (props) => <HeaderTitle {...props} title="Forum"/>,          
         }}
       />
     </Navigator>

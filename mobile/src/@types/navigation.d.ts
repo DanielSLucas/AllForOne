@@ -23,6 +23,7 @@ export declare global {
       riskLocationDetails: RiskLocationDetailsParams;
       selectMapPosition: undefined;
       riskLocationForm: RiskLocationFormParams;
+      forum: undefined;
     }
   }
 }
