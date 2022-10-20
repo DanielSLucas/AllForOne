@@ -22,12 +22,15 @@ export class RiskLocationsService {
     coords,
     risk,
     description,
+    created_by,
   }: CreateRiskLocationDTO): Promise<RiskLocationDocument> {
     const createdRiskLocation = new this.RiskLocationModel({
       location: new PointLocation(coords),
       risk,
       description,
+      created_by,
     });
+
     return createdRiskLocation.save();
   }
 
