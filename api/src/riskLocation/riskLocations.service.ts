@@ -10,12 +10,14 @@ import {
 } from './schemas/riskLocation.schema';
 import { CreateRiskLocationDTO } from './dtos/create-risk-location.dto';
 import { SearchNearToDTO } from './dtos/search-near-to.dto';
+import { UsersService } from 'src/users/users.service';
 
 @Injectable()
 export class RiskLocationsService {
   constructor(
     @InjectModel(RiskLocation.name)
     private RiskLocationModel: Model<RiskLocationDocument>,
+    private usersService: UsersService,
   ) {}
 
   async create({
@@ -24,6 +26,8 @@ export class RiskLocationsService {
     description,
     created_by,
   }: CreateRiskLocationDTO): Promise<RiskLocationDocument> {
+    await this.usersService.findById(created_by);
+
     const createdRiskLocation = new this.RiskLocationModel({
       location: new PointLocation(coords),
       risk,
