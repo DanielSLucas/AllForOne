@@ -1,7 +1,10 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
+  HttpCode,
+  HttpStatus,
   Param,
   Post,
   Put,
@@ -23,12 +26,20 @@ export class UsersController {
     return this.usersService.create(createUserDTO);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Put(':id')
   async update(
     @Param('id') id: string,
     @Body() updateUserDTO: UpdateUserDTO,
   ): Promise<User> {
     return this.usersService.update(id, updateUserDTO);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Delete(':id')
+  @HttpCode(HttpStatus.NO_CONTENT)
+  async delete(@Param('id') id: string) {
+    return this.usersService.delete(id);
   }
 
   @UseGuards(JwtAuthGuard)

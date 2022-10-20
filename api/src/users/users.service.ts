@@ -33,10 +33,7 @@ export class UsersService {
       );
     }
 
-    return this.userModel.create({
-      ...createUserDTO,
-      active: true,
-    });
+    return this.userModel.create(createUserDTO);
   }
 
   async update(id: string, updateUserDTO: UpdateUserDTO): Promise<User> {
@@ -45,7 +42,6 @@ export class UsersService {
     const newUser = {
       _id: user._id,
       eula: user.eula,
-      active: user.active,
       ...updateUserDTO,
     };
 
@@ -57,6 +53,16 @@ export class UsersService {
     );
 
     return newUser;
+  }
+
+  async delete(id: string): Promise<any> {
+    await this.findById(id);
+
+    await this.userModel.deleteOne({
+      _id: id,
+    });
+
+    return;
   }
 
   async findAll(): Promise<UserDocument[]> {
