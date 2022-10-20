@@ -1,31 +1,48 @@
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import { useState } from 'react';
-import { Text, View } from 'react-native';
+import { Alert, Text, View } from 'react-native';
+
+import { useAuth } from '../../hooks/auth';
 
 import { Button } from '../../components/Button';
 import { OtpInput } from '../../components/OtpInput';
+
+import { SignInParams } from '../../@types/navigation';
 
 import { styles } from './styles';
 
 export function SignIn() {
   const navigation = useNavigation();
+  const { signIn } = useAuth();
+  const route = useRoute();
+  const { cellphone } = route.params as SignInParams;
   
-  const [value, setValue] = useState('');
+  const [otp, setOtp] = useState('');
   const [error, setError] = useState(false);
 
   async function handleSignIn() {
-    if (!value){
+    const isValidOtp = /^\d{4}$/;
+    
+    if (!otp || !isValidOtp.test(otp)){
       setError(true);
       return;
     }
     
-    const logedIn = (() => true)();
+    setError(false);
 
-    if (logedIn) {
-      setError(false);
+    try {
+      await signIn({
+        username: cellphone.replace(/\D/g, ''),
+        password: otp
+      });
+
       navigation.navigate('riskLocationsMap');
-    } else {
-      setError(true)
+    } catch (error: any) {
+      setError(true);
+      Alert.alert(
+        "Ocorreu um erro",
+        error.message
+      );
     }
   }
 
@@ -35,8 +52,8 @@ export function SignIn() {
         <Text style={styles.title}>Valide seu login</Text>
 
         <OtpInput 
-          value={value}
-          setValue={setValue}
+          value={otp}
+          setValue={setOtp}
         />
 
         <Text style={[styles.description, error ? styles.error : {}]}>

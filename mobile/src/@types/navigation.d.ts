@@ -2,6 +2,10 @@ export interface SignUpParams {
   cellphone: string;
 }
 
+export interface SignInParams {
+  cellphone: string;
+}
+
 export interface RiskLocationDetailsParams {
   riskLocationId: string;
 }
@@ -19,7 +23,7 @@ export declare global {
       firstSteps: undefined;
       riskLocationsMap: undefined;
       signUp: SignUpParams;
-      signIn: undefined;
+      signIn: SignInParams;
       riskLocationDetails: RiskLocationDetailsParams;
       selectMapPosition: undefined;
       riskLocationForm: RiskLocationFormParams;

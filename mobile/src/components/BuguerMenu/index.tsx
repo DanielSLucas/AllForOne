@@ -8,9 +8,11 @@ import { useBuguerMenu } from '../../hooks/buguerMenu';
 import { styles } from './styles';
 import { THEME } from '../../styles/theme';
 import { useNavigation } from '@react-navigation/native';
+import { useAuth } from '../../hooks/auth';
 
 export function BuguerMenu() {
   const { isOpen, toggleMenu } = useBuguerMenu();
+  const { user, signOut } = useAuth();
   const navigation = useNavigation();
 
   function navigateTo (address: string, type: 'url' | 'screen' = 'screen') {
@@ -40,17 +42,36 @@ export function BuguerMenu() {
           <View style={styles.linksContainer}>
             
             {/* Profile ou Login */}
-            <TouchableOpacity 
-              style={styles.link} 
-              onPress={() => navigateTo('profile')}
-            >
-              <MaterialCommunityIcons 
-                name="account-outline" 
-                size={28} 
-                color={THEME.COLORS.TEXT.TITLE}
-              />
-              <Text style={styles.linkText}>Fulana</Text>
-            </TouchableOpacity>
+            
+
+            {user
+              ? (
+                <TouchableOpacity 
+                  style={styles.link} 
+                  onPress={() => signOut()}
+                >
+                  <MaterialCommunityIcons 
+                    name="account-outline" 
+                    size={28} 
+                    color={THEME.COLORS.TEXT.TITLE}
+                  />
+                  <Text style={styles.linkText}>{user.name}</Text>
+                </TouchableOpacity>
+              )
+              : (
+                <TouchableOpacity 
+                  style={styles.link} 
+                  onPress={() => navigateTo('firstSteps')}
+                >
+                  <MaterialCommunityIcons 
+                    name="login" 
+                    size={28} 
+                    color={THEME.COLORS.TEXT.TITLE}
+                  />
+                  <Text style={styles.linkText}>Login</Text>
+                </TouchableOpacity>
+              )
+            }
 
             <TouchableOpacity 
               style={styles.link} 

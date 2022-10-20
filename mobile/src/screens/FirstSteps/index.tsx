@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { KeyboardAvoidingView, Platform, View } from 'react-native';
+import { ActivityIndicator, KeyboardAvoidingView, Platform, View } from 'react-native';
 import Swiper from 'react-native-swiper';
 
 import { Slide } from '../../components/FirstSteps/Slide';
@@ -12,8 +12,13 @@ import { styles } from './styles';
 import onboardingMapMarker from '../../images/onboardingMapMarker.png';
 import megafone from '../../images/megafone.png';
 import brand from '../../images/brand.png';
+import { useAuth } from '../../hooks/auth';
+import { THEME } from '../../styles/theme';
+import { useNavigation } from '@react-navigation/native';
 
 export function FirstSteps() {
+  const { isLoading, user } = useAuth();
+  const navigation = useNavigation();
   const swiper = useRef<Swiper>(null);  
 
   const [currentPage, setCurrentPage] = useState(0);
@@ -36,6 +41,12 @@ export function FirstSteps() {
       return;
     }
   }, [currentPage]);
+
+  useEffect(() => {
+    if (!isLoading && user) {
+      navigation.navigate('riskLocationsMap');
+    }
+  }, [isLoading, user])
 
   return (
     <KeyboardAvoidingView
@@ -92,7 +103,16 @@ export function FirstSteps() {
             Login
           </PageHeader>
 
-          <LoginForm />
+          {isLoading 
+            ? (
+              <ActivityIndicator 
+                size="large" 
+                color={THEME.COLORS.BLUE}
+                style={{ marginTop: 32 }}
+              />
+            )
+            : <LoginForm />
+          }
         </Slide>
       </Swiper>
     </KeyboardAvoidingView>

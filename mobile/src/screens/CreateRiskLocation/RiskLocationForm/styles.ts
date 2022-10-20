@@ -28,6 +28,7 @@ export const styles = StyleSheet.create({
 
   textArea: {
     height: 112,
+    textAlignVertical: 'top',
   },
 
   createButton: {

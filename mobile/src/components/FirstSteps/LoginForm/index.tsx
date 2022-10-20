@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { Text, View } from 'react-native';
 import { Link, useNavigation } from '@react-navigation/native';
 
+import { useAuth } from '../../../hooks/auth';
+
 import { Button } from '../../Button';
 import { Input } from '../../Input';
 
@@ -9,17 +11,19 @@ import { styles } from './styles';
 
 export function LoginForm() {
   const navigation = useNavigation();
+  const { sendOtp } = useAuth();
   const [cellphone, setCellphone] = useState('');
   
-  function handleSubmit() {
-    
-    const userAlreadyExists = (() => {
-      return true;
-    })();
-    
-    if(userAlreadyExists) {
-      navigation.navigate('signIn');  
-    } else {
+  async function handleSubmit() {
+    const serializedCellphone = cellphone.replace(/\D/g, '');
+
+    const canSendOtp = await sendOtp(serializedCellphone)  
+
+    if(canSendOtp.success) {
+      navigation.navigate('signIn', {
+        cellphone,
+      });  
+    } else {      
       navigation.navigate('signUp', {
         cellphone,
       });

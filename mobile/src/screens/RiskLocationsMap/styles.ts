@@ -40,7 +40,7 @@ export const styles = StyleSheet.create({
     backgroundColor: 'rgba(255, 255, 255, 0.8)',
     borderRadius: THEME.BORDER_RADIUS.LG,
     flexDirection: 'row',
-    justifyContent: 'center',
+    justifyContent: 'space-between',
     alignItems: 'center',    
   },
 
@@ -48,10 +48,7 @@ export const styles = StyleSheet.create({
     fontFamily: THEME.FONT_FAMILY.SEMI_BOLD,
     fontSize: THEME.FONT_SIZE.SM,
     color: THEME.COLORS.BLUE,
-    marginRight: 'auto',
+    width: "75%",    
   },
 
-  calloutIcon: {
-    color: THEME.COLORS.TEXT.TITLE,    
-  }
 });

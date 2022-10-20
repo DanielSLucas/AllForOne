@@ -1,8 +1,11 @@
+import { useRoute } from '@react-navigation/native';
 import { useEffect, useState } from 'react';
 import { ActivityIndicator, Text, View } from 'react-native';
 import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
+import { RiskLocationDetailsParams } from '../../@types/navigation';
 
 import mapMarker from '../../images/mapMarker.png';
+import { api } from '../../services/api';
 import { THEME } from '../../styles/theme';
 
 import { styles } from './styles';
@@ -16,20 +19,18 @@ interface RiskLocation {
 }
 
 export function RiskLocationDetails() {
+  const route = useRoute();
+  const { riskLocationId } = route.params as RiskLocationDetailsParams;
   const [riskLocation, setRiskLocation] = useState<RiskLocation>()
   
 
   useEffect(() => {
-    (async () => {
-      setTimeout(() => {
-        setRiskLocation({
-          location: {
-            coordinates: [-22.7849967, -45.165675]
-          },
-          risk: "Rua perigosa",
-          description: "Essa rua está com problema de iluminação, então geralemente ela é bem deserta. Melhor evitar."
-        })
-      }, 500);
+    (async () => {      
+      const response = await api.get<RiskLocation>(
+        `/riskLocation/${riskLocationId}`
+      );
+
+      setRiskLocation(response.data)      
     })()
   }, [])
 

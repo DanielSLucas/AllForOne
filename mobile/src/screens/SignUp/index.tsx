@@ -1,5 +1,5 @@
-import { useRef, useState } from 'react';
-import { useRoute } from '@react-navigation/native';
+import { useEffect, useRef, useState } from 'react';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import { Alert, Text, TextInput, TouchableWithoutFeedback, View } from 'react-native';
 import Checkbox from 'expo-checkbox';
 
@@ -10,15 +10,18 @@ import { EulaModal } from '../../components/EulaModal';
 import { SignUpParams } from '../../@types/navigation';
 import { THEME } from '../../styles/theme';
 import { styles } from './styles';
+import { api } from '../../services/api';
+import { useAuth } from '../../hooks/auth';
 
 export function SignUp() {
+  const { sendOtp } = useAuth();
+  const navigation = useNavigation();
   const route = useRoute();
   const { cellphone: cellphoneInitialValue } = route.params as SignUpParams;
-
   const cellphoneInputRef = useRef<TextInput>(null);
   const [isEulaModalOpen, setIsEulaModalOpen] = useState(false);
-
-  const [cellphone, setCellphone] = useState(cellphoneInitialValue);
+  
+  const [cellphone, setCellphone] = useState('');
   const [cellphoneError, setCellphoneError] = useState(false);
   const [fullName, setFullName] = useState('');
   const [fullNameError, setFullNameError] = useState(false);
@@ -30,9 +33,14 @@ export function SignUp() {
         "Termos e condições", 
         "Você deve aceitar os termos e condições de uso antes de prosseguir."
       );
+      
+      return;
     }
 
-    if(!fullName || !cellphone) {
+    const isCellphone = /^\(?\d{2}\)?\s?9\d{4}[\s,-]?\d{4}$/;
+    const userCellphone = cellphone ? cellphone : cellphoneInitialValue;
+
+    if(!fullName || !userCellphone || !isCellphone.test(userCellphone)) {
       !fullName && setFullNameError(true);
       !cellphone && setCellphoneError(true);
 
@@ -40,6 +48,8 @@ export function SignUp() {
         "Valor inválido!", 
         "Por favor preencha todos os campos com valores válidos."
       );
+
+      return;
     }
 
     setFullNameError(false);
@@ -47,16 +57,26 @@ export function SignUp() {
 
     const data = {
       name: fullName,
-      cellphone: cellphone.replace(/\D/g,''),
+      cellphone: userCellphone.replace(/\D/g,''),
       eula,
     }
 
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        console.log(data);
-        resolve();
-      }, 500);
-    });
+    console.log(data);
+
+    try {
+      await api.post('/users', data);
+
+      await sendOtp(data.cellphone);
+
+      navigation.navigate('signIn', {
+        cellphone: userCellphone,
+      });
+    } catch (error: any) {
+      Alert.alert(
+        "Ocorreu um erro", 
+        error.message
+      );
+    }
   }
 
   function toggleEulaModal() {
@@ -99,6 +119,7 @@ export function SignUp() {
           ref={cellphoneInputRef}
           label='Celular' 
           value={cellphone}
+          defaultValue={cellphoneInitialValue}
           error={cellphoneError}
           onChangeText={text => setCellphone(text)}
           containerStyle={styles.formItem}
