@@ -1,4 +1,5 @@
 import { IsBoolean, IsNotEmpty, Matches } from 'class-validator';
+import { MessagesHelper } from 'src/helpers/messages.helper';
 import { RegexHelper } from 'src/helpers/regex.helper';
 
 export class CreateUserDTO {
@@ -7,7 +8,7 @@ export class CreateUserDTO {
 
   @IsNotEmpty()
   @Matches(RegexHelper.cellphone, {
-    message: "Deve ser um celular válido: DDD + '9' + celular",
+    message: MessagesHelper.valid_cellphone,
   })
   cellphone: string;
 
