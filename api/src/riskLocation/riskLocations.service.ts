@@ -1,6 +1,6 @@
 import { Model } from 'mongoose';
 
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 
 import {
@@ -36,6 +36,16 @@ export class RiskLocationsService {
     });
 
     return createdRiskLocation.save();
+  }
+
+  async findById(id: string): Promise<RiskLocationDocument> {
+    const riskLocation = await this.RiskLocationModel.findOne({
+      _id: id,
+    });
+
+    if (!riskLocation) throw new NotFoundException('Risk Location not found');
+
+    return riskLocation;
   }
 
   async findAll(): Promise<RiskLocationDocument[]> {

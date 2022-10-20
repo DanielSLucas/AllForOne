@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Post, Query, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Post,
+  Query,
+  UseGuards,
+} from '@nestjs/common';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 
 import { CreateRiskLocationDTO } from './dtos/create-risk-location.dto';
@@ -28,5 +36,10 @@ export class RiskLocationsController {
     @Query() query: SearchNearToDTO,
   ): Promise<RiskLocationDocument[]> {
     return this.riskLocationsService.findNearTo(query);
+  }
+
+  @Get(':id')
+  async findById(@Param('id') id: string): Promise<RiskLocationDocument> {
+    return this.riskLocationsService.findById(id);
   }
 }
