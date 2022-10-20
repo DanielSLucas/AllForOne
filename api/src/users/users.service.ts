@@ -22,6 +22,16 @@ export class UsersService {
       throw new BadRequestException('To sign up, EULA must be accepted.');
     }
 
+    const userExists = await this.userModel.findOne({
+      cellphone: createUserDTO.cellphone,
+    });
+
+    if (userExists) {
+      throw new BadRequestException(
+        'An user with this cellphone already exists',
+      );
+    }
+
     return this.userModel.create(createUserDTO);
   }
 
