@@ -13,6 +13,9 @@ export class User {
 
   @Prop({ required: true })
   eula: boolean;
+
+  @Prop({ required: true })
+  active: boolean;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

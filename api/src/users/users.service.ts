@@ -32,14 +32,17 @@ export class UsersService {
       );
     }
 
-    return this.userModel.create(createUserDTO);
+    return this.userModel.create({
+      ...createUserDTO,
+      active: true,
+    });
   }
 
   async findAll(): Promise<UserDocument[]> {
     return this.userModel.find();
   }
 
-  async findByCellphone(cellphone: string): Promise<UserDocument | null> {
+  async findByCellphone(cellphone: string): Promise<UserDocument> {
     const user = await this.userModel.findOne({
       cellphone,
     });
