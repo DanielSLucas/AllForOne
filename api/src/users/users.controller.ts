@@ -43,6 +43,12 @@ export class UsersController {
   }
 
   @UseGuards(JwtAuthGuard)
+  @Get(':id')
+  async findById(@Param('id') id: string): Promise<UserDocument> {
+    return this.usersService.findById(id);
+  }
+
+  @UseGuards(JwtAuthGuard)
   @Get()
   async findAll(): Promise<UserDocument[]> {
     return this.usersService.findAll();
