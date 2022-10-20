@@ -20,8 +20,7 @@ export function SelectMapPosition() {
     navigation.navigate('riskLocationForm', { position });
   };
 
-  function handleSelectMapPosition (event: MapEvent) {
-    console.log(event.nativeEvent.coordinate);
+  function handleSelectMapPosition (event: MapEvent) {    
     setPosition(event.nativeEvent.coordinate);
   };
   

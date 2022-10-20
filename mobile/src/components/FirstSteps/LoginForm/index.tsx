@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Text, View } from 'react-native';
+import { Platform, Text, View } from 'react-native';
 import { Link, useNavigation } from '@react-navigation/native';
 
 import { useAuth } from '../../../hooks/auth';
@@ -33,7 +33,8 @@ export function LoginForm() {
   return (
     <View style={styles.container}>
       <Input
-        isTel 
+        isTel={Platform.OS === "android"}
+        keyboardType="number-pad" 
         label="Celular" 
         value={cellphone} 
         onChangeText={text => setCellphone(text)}

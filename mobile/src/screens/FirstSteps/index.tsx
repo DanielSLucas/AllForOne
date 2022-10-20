@@ -15,8 +15,10 @@ import brand from '../../images/brand.png';
 import { useAuth } from '../../hooks/auth';
 import { THEME } from '../../styles/theme';
 import { useNavigation } from '@react-navigation/native';
+import { useKeyboardVisibility } from '../../hooks/useKeyboardVisibility';
 
 export function FirstSteps() {
+  const { isKeyboardVisible } = useKeyboardVisibility();
   const { isLoading, user } = useAuth();
   const navigation = useNavigation();
   const swiper = useRef<Swiper>(null);  
@@ -24,7 +26,7 @@ export function FirstSteps() {
   const [currentPage, setCurrentPage] = useState(0);
   
   const [isFirstTime, setIsFirstTime] = useState(true); 
-  
+    
   useEffect(() => {
     AsyncStorage.getItem('isFirstTime').then(response => {
       if (!response) {
@@ -52,13 +54,16 @@ export function FirstSteps() {
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : undefined}
       style={styles.container}
-      enabled
+      enabled           
     >
       <Swiper 
         ref={swiper}
         dotStyle={styles.swiper_dot}
         activeDotStyle={styles.swiper_activeDot}
-        paginationStyle={styles.swiper_pagination}
+        paginationStyle={[
+          styles.swiper_pagination,
+          isKeyboardVisible ? { bottom: 16 } : {}
+        ]}
         loop={false}
         style={styles.swiper_wrapper}
         onIndexChanged={i => setCurrentPage(i)}

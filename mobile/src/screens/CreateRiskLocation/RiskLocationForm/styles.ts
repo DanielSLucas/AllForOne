@@ -3,8 +3,12 @@ import { THEME } from '../../../styles/theme';
 
 export const styles = StyleSheet.create({
   container: {
+    flex: 1,    
+    paddingHorizontal: 24,    
+  },
+  
+  content: {
     flex: 1,
-    paddingHorizontal: 24,
   },
 
   title: {
@@ -34,6 +38,6 @@ export const styles = StyleSheet.create({
   createButton: {
     marginTop: 'auto',
     height: 56,
-    marginBottom: 32,
+    marginBottom: 80,
   },
 });

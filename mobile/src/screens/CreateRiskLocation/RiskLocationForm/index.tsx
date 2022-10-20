@@ -1,7 +1,8 @@
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { useState } from 'react';
-import { Alert, Text, View } from 'react-native';
+import { Alert, KeyboardAvoidingView, Platform, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { ScrollView } from 'react-native-gesture-handler';
 
 import { useAuth } from '../../../hooks/auth';
 
@@ -13,7 +14,7 @@ import { api } from '../../../services/api';
 
 import { styles } from './styles';
 
-export function RiskLocationForm() {
+export function RiskLocationForm() {    
   const navigation = useNavigation()
   const { user } = useAuth();
   
@@ -64,37 +65,50 @@ export function RiskLocationForm() {
   }
   
   return (
-    <SafeAreaView style={styles.container}>
-      <Text style={styles.title}>
-        Informações
-      </Text>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : undefined}
+      style={{ flex: 1 }}       
+      enabled           
+    >
+      <ScrollView 
+        enabled={false}
+        style={{ flex: 1 }}       
+        contentContainerStyle={styles.container} 
+        keyboardShouldPersistTaps="never"
+      >
+        <SafeAreaView style={styles.content}>
+          <Text style={styles.title}>
+            Informações
+          </Text>
 
-      <View style={styles.divider} />
+          <View style={styles.divider} />
+          
+          <Input 
+            label='Risco'
+            error={riskError}
+            maxLength={30}
+            complementaryText='Máximo de 30 caracteres'
+            value={risk}
+            onChangeText={(text) => setRisk(text)}
+          />
 
-      <Input 
-        label='Risco'
-        error={riskError}
-        maxLength={30}
-        complementaryText='Máximo de 30 caracteres'
-        value={risk}
-        onChangeText={(text) => setRisk(text)}
-      />
+          <Input 
+            label='Descrição'
+            error={descriptionError}
+            maxLength={200}
+            multiline
+            value={description}
+            onChangeText={(text) => setDescription(text)}
+            complementaryText='Máximo de 200 caracteres'
+            style={styles.textArea} 
+            containerStyle={styles.textAreaContainer}          
+          />
 
-      <Input 
-        label='Descrição'
-        error={descriptionError}
-        maxLength={200}
-        multiline
-        value={description}
-        onChangeText={(text) => setDescription(text)}
-        complementaryText='Máximo de 200 caracteres'
-        style={styles.textArea} 
-        containerStyle={styles.textAreaContainer}
-      />
-
-      <Button style={styles.createButton} onPressFunc={handleCreateRiskLocation}>
-        Cadastrar
-      </Button>
-    </SafeAreaView>
+          <Button style={styles.createButton} onPressFunc={handleCreateRiskLocation}>
+            Cadastrar
+          </Button>
+        </SafeAreaView>
+      </ScrollView>
+    </KeyboardAvoidingView>      
   );
 }

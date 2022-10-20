@@ -2,6 +2,7 @@ import { Text, TouchableOpacity, View } from 'react-native';
 import Modal from 'react-native-modal'
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import * as Linking from 'expo-linking';
+// import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { useBuguerMenu } from '../../hooks/buguerMenu';
 
@@ -41,9 +42,6 @@ export function BuguerMenu() {
         <View style={styles.content}>          
           <View style={styles.linksContainer}>
             
-            {/* Profile ou Login */}
-            
-
             {user
               ? (
                 <TouchableOpacity 
@@ -113,7 +111,19 @@ export function BuguerMenu() {
               />
               <Text style={styles.linkText}>Acolhimento</Text>
             </TouchableOpacity>
-                            
+            
+
+            {/* <TouchableOpacity 
+              style={styles.link}
+              onPress={() => AsyncStorage.removeItem('isFirstTime')}
+            >
+              <MaterialCommunityIcons 
+                name="trash-can-outline" 
+                size={28} 
+                color={THEME.COLORS.TEXT.TITLE} 
+              />
+              <Text style={styles.linkText}>Limpar AsyncStorage</Text>
+            </TouchableOpacity> */}
           </View>
 
           <View style={styles.footer}>

@@ -1,17 +1,28 @@
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { useNavigation, useRoute } from '@react-navigation/native';
-import { Alert, Text, TextInput, TouchableWithoutFeedback, View } from 'react-native';
+import { 
+  Alert, 
+  KeyboardAvoidingView, 
+  Platform, 
+  Text, 
+  TextInput, 
+  TouchableWithoutFeedback, 
+  View 
+} from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
 import Checkbox from 'expo-checkbox';
+
+import { useAuth } from '../../hooks/auth';
 
 import { Input } from '../../components/Input';
 import { Button } from '../../components/Button';
 import { EulaModal } from '../../components/EulaModal';
 
 import { SignUpParams } from '../../@types/navigation';
-import { THEME } from '../../styles/theme';
-import { styles } from './styles';
 import { api } from '../../services/api';
-import { useAuth } from '../../hooks/auth';
+
+import { styles } from './styles';
+import { THEME } from '../../styles/theme';
 
 export function SignUp() {
   const { sendOtp } = useAuth();
@@ -59,9 +70,7 @@ export function SignUp() {
       name: fullName,
       cellphone: userCellphone.replace(/\D/g,''),
       eula,
-    }
-
-    console.log(data);
+    }    
 
     try {
       await api.post('/users', data);
@@ -94,62 +103,76 @@ export function SignUp() {
   }
 
   return (
-    <View style={styles.container}>
-      <EulaModal 
-        isOpen={isEulaModalOpen} 
-        toggleModal={toggleEulaModal}
-        onAgree={handleAgree}
-        onDisagree={handleDisagree}
-      />
-      <View style={styles.content}>
-        <Text style={styles.title}>Informações</Text>
-
-        <Input 
-          label='Nome completo'
-          value={fullName}
-          error={fullNameError}
-          onChangeText={text => setFullName(text)}
-          containerStyle={styles.formItem}
-          returnKeyType="next"
-          onSubmitEditing={() => {
-            cellphoneInputRef.current?.focus()
-          }}
-        />
-        <Input
-          ref={cellphoneInputRef}
-          label='Celular' 
-          value={cellphone}
-          defaultValue={cellphoneInitialValue}
-          error={cellphoneError}
-          onChangeText={text => setCellphone(text)}
-          containerStyle={styles.formItem}
-          returnKeyType="send"
-          onSubmitEditing={handleSignUp}
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : undefined}
+      style={{ flex: 1 }}       
+      enabled           
+    >
+      <ScrollView 
+        enabled={false}
+        style={{ flex: 1 }}       
+        contentContainerStyle={styles.container}
+        keyboardShouldPersistTaps="never"
+      >
+        <EulaModal 
+          isOpen={isEulaModalOpen} 
+          toggleModal={toggleEulaModal}
+          onAgree={handleAgree}
+          onDisagree={handleDisagree}
         />
 
-        <TouchableWithoutFeedback onPress={toggleEulaModal}>
-          <View style={styles.checkboxContainer}>
-            <Checkbox 
-              style={styles.checkbox}
-              color={THEME.COLORS.PURPLE}              
-              value={eula} 
-              onValueChange={setEula}
-              disabled
-            />
-            <Text style={styles.checkboxText}>
-              Aceito os {' '}
-            </Text>
-            <Text style={styles.checkboxBoldText}>Termos e condições de uso</Text>
-          </View>
-        </TouchableWithoutFeedback>
+        <View style={styles.content}>
+          <Text style={styles.title}>Informações</Text>
 
-        <Button 
-          style={styles.formItem}           
-          onPressFunc={handleSignUp}
-        >
-          Cadastrar
-        </Button>
-      </View>
-    </View>
+          <Input 
+            label='Nome completo'            
+            value={fullName}
+            error={fullNameError}
+            onChangeText={text => setFullName(text)}
+            containerStyle={styles.formItem}
+            returnKeyType="next"
+            onSubmitEditing={() => {
+              cellphoneInputRef.current?.focus()
+            }}
+          />
+
+          <Input
+            ref={cellphoneInputRef}
+            label='Celular'
+            keyboardType='number-pad'
+            value={cellphone}
+            defaultValue={cellphoneInitialValue}
+            error={cellphoneError}
+            onChangeText={text => setCellphone(text)}
+            containerStyle={styles.formItem}
+            returnKeyType="send"
+            onSubmitEditing={handleSignUp}
+          />
+
+          <TouchableWithoutFeedback onPress={toggleEulaModal}>
+            <View style={styles.checkboxContainer}>
+              <Checkbox 
+                style={styles.checkbox}
+                color={THEME.COLORS.PURPLE}              
+                value={eula} 
+                onValueChange={setEula}
+                disabled
+              />
+              <Text style={styles.checkboxText}>
+                Aceito os {' '}
+              </Text>
+              <Text style={styles.checkboxBoldText}>Termos e condições de uso</Text>
+            </View>
+          </TouchableWithoutFeedback>
+
+          <Button 
+            style={styles.formItem}           
+            onPressFunc={handleSignUp}
+          >
+            Cadastrar
+          </Button>
+        </View>
+      </ScrollView>
+    </KeyboardAvoidingView>    
   );
 }

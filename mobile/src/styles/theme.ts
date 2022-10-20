@@ -9,10 +9,6 @@ export const THEME = {
       COMPLEMENTARY: '#8FA7B2'
     },
 
-    // CAPTION_500: '#71717A',
-    // CAPTION_400: '#A1A1AA',
-    // CAPTION_300: '#D4D4D8',
-
     SHAPE: 'rgba(0,0,0,0.2)',
 
     PURPLE: '#512D6D',
@@ -25,12 +21,8 @@ export const THEME = {
       BORDER: '#D3E2E5'
     },
 
-    // SUCCESS: '#34D399',
-    // ALERT: '#F87171',
-
     GRADIENT: ['#512D6D', '#F8485E'],
     GRADIENT_REVERSE: ['#F8485E', '#512D6D'],
-    // OVERLAY: 'rgba(0,0,0,0.6)',
   },
 
   FONT_FAMILY: {

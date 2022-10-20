@@ -1,18 +1,19 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import { FirstSteps } from '../screens/FirstSteps';
-import { RiskLocationsMap } from '../screens/RiskLocationsMap';
-import { SignUp } from '../screens/SignUp';
-import { SignIn } from '../screens/SignIn';
+import { Forum } from '../screens/Forum';
 import { RiskLocationDetails } from '../screens/RiskLocationDetails';
-import { SelectMapPosition } from '../screens/CreateRiskLocation/SelectMapPosition';
 import { RiskLocationForm } from '../screens/CreateRiskLocation/RiskLocationForm';
+import { RiskLocationsMap } from '../screens/RiskLocationsMap';
+import { SelectMapPosition } from '../screens/CreateRiskLocation/SelectMapPosition';
+import { SignIn } from '../screens/SignIn';
+import { SignUp } from '../screens/SignUp';
 
 import { AddLocationButton } from '../components/header/AddLocationButton';
-import { HeaderTitle } from '../components/header/HeaderTitle';
-import { CancelButton } from '../components/header/CancelButton';
+import { BackButton } from '../components/header/BackButton';
 import { BurguerMenuButton } from '../components/header/BurguerMenuButton';
-import { Forum } from '../screens/Forum';
+import { CancelButton } from '../components/header/CancelButton';
+import { HeaderTitle } from '../components/header/HeaderTitle';
 
 const { Navigator, Screen } = createNativeStackNavigator();
 
@@ -29,8 +30,6 @@ export function AppRoutes() {
         name="riskLocationsMap" 
         component={RiskLocationsMap}
         options={{          
-          headerBackButtonMenuEnabled: false,
-          headerBackVisible: false,
           headerTitleAlign: "center",
           headerLeft: () => <BurguerMenuButton />,
           headerTitle: (props) => <HeaderTitle {...props} title="Locais de Risco"/>,
@@ -43,6 +42,7 @@ export function AppRoutes() {
         component={SignUp}
         options={{
           headerTitleAlign: "center",
+          headerLeft: () => <BackButton />,
           headerTitle: (props) => <HeaderTitle {...props} title="Cadastro"/>,
         }}
       />
@@ -52,7 +52,8 @@ export function AppRoutes() {
         component={SignIn}
         options={{
           headerTitleAlign: "center",
-          headerTitle: (props) => <HeaderTitle {...props} title="Entrar"/>,
+          headerLeft: () => <BackButton />,
+          headerTitle: (props) => <HeaderTitle {...props} title="Entrar"/>,          
         }}
       />
 
@@ -61,6 +62,7 @@ export function AppRoutes() {
         component={RiskLocationDetails}        
         options={{
           headerTitleAlign: "center",
+          headerLeft: () => <BackButton />,
           headerTitle: (props) => <HeaderTitle {...props} title="Local de risco"/>,
         }}
       />
@@ -70,6 +72,7 @@ export function AppRoutes() {
         component={SelectMapPosition}        
         options={{
           headerTitleAlign: "center",
+          headerLeft: () => <BackButton />,
           headerTitle: (props) => <HeaderTitle {...props} title="Adicionar local de risco"/>,
         }}
       />
@@ -79,6 +82,7 @@ export function AppRoutes() {
         component={RiskLocationForm}        
         options={{
           headerTitleAlign: "center",
+          headerLeft: () => <BackButton />,
           headerTitle: (props) => <HeaderTitle {...props} title="Adicionar local de risco"/>,
           headerRight: () => <CancelButton />
         }}
@@ -88,8 +92,6 @@ export function AppRoutes() {
         name='forum' 
         component={Forum}        
         options={{          
-          headerBackButtonMenuEnabled: false,
-          headerBackVisible: false,
           headerTitleAlign: "center",
           headerLeft: () => <BurguerMenuButton />,
           headerTitle: (props) => <HeaderTitle {...props} title="Forum"/>,          

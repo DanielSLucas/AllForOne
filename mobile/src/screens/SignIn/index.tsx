@@ -1,6 +1,7 @@
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { useState } from 'react';
-import { Alert, Text, View } from 'react-native';
+import { Alert, KeyboardAvoidingView, Platform, Text, View } from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
 
 import { useAuth } from '../../hooks/auth';
 
@@ -47,26 +48,37 @@ export function SignIn() {
   }
 
   return (
-    <View style={styles.container}>
-      <View style={styles.content}>
-        <Text style={styles.title}>Valide seu login</Text>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : undefined}
+      style={{ flex: 1 }}       
+      enabled           
+    >
+      <ScrollView 
+        enabled={false}
+        style={{ flex: 1 }}       
+        contentContainerStyle={styles.container}
+        keyboardShouldPersistTaps="never"
+      >
+        <View style={styles.content}>
+          <Text style={styles.title}>Valide seu login</Text>
 
-        <OtpInput 
-          value={otp}
-          setValue={setOtp}
-        />
+          <OtpInput 
+            value={otp}
+            setValue={setOtp}
+          />
 
-        <Text style={[styles.description, error ? styles.error : {}]}>
-          {error 
-            ? 'Código inválido! Tente novamente.'
-            : 'Código de 4 dígitos enviados via SMS'
-          }
-        </Text>
+          <Text style={[styles.description, error ? styles.error : {}]}>
+            {error 
+              ? 'Código inválido! Tente novamente.'
+              : 'Código de 4 dígitos enviados via SMS'
+            }
+          </Text>
 
-        <Button style={styles.signInButton} onPressFunc={handleSignIn}>
-          Entrar
-        </Button>
-      </View>
-    </View>
+          <Button style={styles.signInButton} onPressFunc={handleSignIn}>
+            Entrar
+          </Button>
+        </View>
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 }
