@@ -1,27 +1,35 @@
 import { StyleSheet } from 'react-native';
-
 import { THEME } from '../../styles/theme';
 
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
-    width: "80%",
-    backgroundColor: THEME.COLORS.BACKGROUND,
     alignItems: 'center',
     justifyContent: 'center',
-    padding: 24,
   },
 
   content: {
-    backgroundColor: THEME.COLORS.BACKGROUND,
-    height: "80%",
-    width: "100%",    
-    borderRadius: 8,
-    overflow: 'hidden'
+    width: "100%",
+    padding: 24,
+    marginBottom: 40,  
   },
 
-  linksContainer: {
+  title: {
+    fontFamily: THEME.FONT_FAMILY.BOLD,
+    fontSize: THEME.FONT_SIZE.XL,
+    color: THEME.COLORS.TEXT.TITLE,
+  },
 
+  formItem: {
+    marginTop: 16,
+  },
+
+  button: {
+    marginTop: 24,
+  },
+
+  footer: {
+    
   },
 
   link: {
@@ -31,25 +39,10 @@ export const styles = StyleSheet.create({
   },  
   
   linkText: {
-    maxWidth: 200,
     marginLeft: 16,
 
     color: THEME.COLORS.TEXT.TITLE,
     fontFamily: THEME.FONT_FAMILY.SEMI_BOLD,
     fontSize: THEME.FONT_SIZE.MD
   },
-
-  footer: {
-    marginTop: "auto",
-    
-  },
-
-  footerText: {
-    textAlign: 'center',
-
-    color: THEME.COLORS.TEXT.TITLE,
-    fontFamily: THEME.FONT_FAMILY.REGULAR,
-    fontSize: THEME.FONT_SIZE.SM
-  },
-
 });

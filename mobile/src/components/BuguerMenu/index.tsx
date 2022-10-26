@@ -46,14 +46,14 @@ export function BuguerMenu() {
               ? (
                 <TouchableOpacity 
                   style={styles.link} 
-                  onPress={() => signOut()}
+                  onPress={() => navigateTo('profile')}
                 >
                   <MaterialCommunityIcons 
                     name="account-outline" 
                     size={28} 
                     color={THEME.COLORS.TEXT.TITLE}
                   />
-                  <Text style={styles.linkText}>{user.name}</Text>
+                  <Text style={styles.linkText} numberOfLines={1}>{user.name}</Text>
                 </TouchableOpacity>
               )
               : (

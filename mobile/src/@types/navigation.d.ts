@@ -28,6 +28,7 @@ export declare global {
       selectMapPosition: undefined;
       riskLocationForm: RiskLocationFormParams;
       forum: undefined;
+      profile: undefined;
     }
   }
 }
