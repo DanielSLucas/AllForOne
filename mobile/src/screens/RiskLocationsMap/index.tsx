@@ -1,20 +1,21 @@
 import { useEffect, useRef, useState } from 'react';
-import { Text, Linking, View } from 'react-native';
+import { Text, Linking, TouchableOpacity } from 'react-native';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
-import MapView, { Marker, Callout, PROVIDER_GOOGLE } from 'react-native-maps';
+import MapView, { PROVIDER_GOOGLE, Region } from 'react-native-maps';
 import * as Location from 'expo-location';
-import { RectButton } from 'react-native-gesture-handler';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import FeatherIcons from '@expo/vector-icons/Feather';
+// import { useInterstitialAd, TestIds } from 'react-native-google-mobile-ads';
+import { debounce } from 'lodash';
 
 import { BuguerMenu } from '../../components/BuguerMenu';
+import { CustomMapMarker } from '../../components/CustomMapMarker';
 
 import mapMarker from '../../images/mapMarker.png';
-import { api } from '../../services/api';
+import mapAdMarker from '../../images/mapAdMarker.png';
 
 import { styles } from './styles';
 
-import { THEME } from '../../styles/theme';
+import { api } from '../../services/api';
 
 interface RiskLocation {
   _id: string;
@@ -25,12 +26,20 @@ interface RiskLocation {
 }
 
 export function RiskLocationsMap() {  
+  // const { isLoaded, load, show } = useInterstitialAd(TestIds.INTERSTITIAL, {
+  //   requestNonPersonalizedAdsOnly: true,
+  // });
   const navigation = useNavigation();
   const mapRef=  useRef<MapView>(null);
 
   const [riskLocations, setRiskLocations] = useState<RiskLocation[]>([]);
+  const [mapAdLocation, setMapAdLocation] = useState({
+    latitude: 0,
+    longitude: 0,
+  });
 
   useEffect(() => {
+    // load();
     (async function navigateToCurrentLocation () {     
       let { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== 'granted') {        
@@ -39,6 +48,11 @@ export function RiskLocationsMap() {
       
       let currentPosition = await Location.getCurrentPositionAsync({});
       
+      setMapAdLocation({
+        latitude: currentPosition.coords.latitude,
+        longitude: currentPosition.coords.longitude,
+      });
+
       mapRef.current?.animateCamera({
         center: {
           latitude: currentPosition.coords.latitude,
@@ -67,6 +81,34 @@ export function RiskLocationsMap() {
     });
   }
 
+  async function openAd () {
+    console.log('Show Ad!');
+    // if (isLoaded) {
+    //   show();
+    // }
+  }
+
+  async function handleChangeRegion(region: Region) {
+    deboucedRegionChange(region);
+  }
+
+  const deboucedRegionChange = useRef(
+    debounce((region: Region) => {
+      const plusOrMinus = () => Math.random() < 0.5 ? -1 : 1;
+
+      setMapAdLocation({
+        latitude: region.latitude + (plusOrMinus() * 0.000004),
+        longitude: region.longitude + (plusOrMinus() * 0.000004),
+      });
+    }, 2000) 
+  ).current;
+
+  useEffect(() => {
+    return () => {
+      deboucedRegionChange.cancel();
+    };
+  }, [deboucedRegionChange]);
+
   return (
     <SafeAreaView style={styles.container}>
       <BuguerMenu />
@@ -74,41 +116,36 @@ export function RiskLocationsMap() {
         ref={mapRef}
         provider={PROVIDER_GOOGLE}
         style={styles.map}
+        onRegionChange={handleChangeRegion}        
       >
+        <CustomMapMarker          
+          icon={mapAdMarker}
+          data={{
+            _id: 'ad',
+            location: {
+              coordinates: [
+                mapAdLocation.latitude, 
+                mapAdLocation.longitude
+              ]
+            },
+            calloutText: "Ajude-nos"
+          }}
+          onCalloutPress={openAd}
+        />
+
         {riskLocations.map(riskLocation => (
-          <Marker
+          <CustomMapMarker
             key={riskLocation._id}
             icon={mapMarker}
-            calloutAnchor={{
-              x: 2.7,
-              y: 0.8,
-            }}
-            coordinate={{
-              latitude: riskLocation.location.coordinates[0],
-              longitude: riskLocation.location.coordinates[1],
-            }}
-          >
-            <Callout tooltip onPress={() => handleNavigateToRiskLocationDetails(riskLocation._id)}>
-              <View style={styles.calloutContainer}>
-                <Text style={styles.calloutText} numberOfLines={1}>
-                  {riskLocation.risk}
-                </Text>
-                <FeatherIcons 
-                  name='chevron-right'
-                  size={20}                           
-                  color={THEME.COLORS.TEXT.TITLE}
-                />
-              </View>
-            </Callout>
-          </Marker>
-        ))}
-        
+            data={{ ...riskLocation, calloutText: riskLocation.risk }}
+            onCalloutPress={() => handleNavigateToRiskLocationDetails(riskLocation._id)}
+          />
+        ))}        
       </MapView>
-
       
-      <RectButton style={styles.callForHelpButton} onPress={handleCallForHelp}>
+      <TouchableOpacity style={styles.callForHelpButton} onPress={handleCallForHelp}>
         <Text style={styles.callForHelpButtonText}>Preciso de ajuda!</Text>
-      </RectButton>
+      </TouchableOpacity>
       
     </SafeAreaView>
   );
