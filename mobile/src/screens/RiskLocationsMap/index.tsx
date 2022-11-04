@@ -62,7 +62,7 @@ export function RiskLocationsMap() {
           longitude: currentPosition.coords.longitude,
         },
         zoom: 15
-      }, { duration: 2000 });
+      }, { duration: 3500 });
     })();        
   }, []);
 

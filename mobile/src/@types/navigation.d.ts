@@ -1,3 +1,5 @@
+import { RiskLocation } from "../screens/RiskLocationDetails";
+
 export interface SignUpParams {
   cellphone: string;
 }
@@ -15,6 +17,11 @@ export interface RiskLocationFormParams {
     latitude: number;
     longitude: number;
   };
+  riskLocation?: RiskLocation;
+}
+
+export interface SelectMapPositionParams {
+  riskLocation?: RiskLocation;
 }
 
 export declare global {
@@ -25,7 +32,7 @@ export declare global {
       signUp: SignUpParams;
       signIn: SignInParams;
       riskLocationDetails: RiskLocationDetailsParams;
-      selectMapPosition: undefined;
+      selectMapPosition: SelectMapPositionParams;
       riskLocationForm: RiskLocationFormParams;
       forum: undefined;
       profile: undefined;

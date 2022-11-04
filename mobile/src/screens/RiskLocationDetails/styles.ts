@@ -4,7 +4,7 @@ import { THEME } from '../../styles/theme';
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 24,
+    paddingHorizontal: 24,
   },
 
   loadingContainer: {
@@ -47,5 +47,10 @@ export const styles = StyleSheet.create({
     fontFamily: THEME.FONT_FAMILY.SEMI_BOLD,
     fontSize: THEME.FONT_SIZE.SM,    
     textAlign: 'justify'
+  },
+
+  footer: {
+    marginTop: 'auto',
+    alignItems: 'center',    
   },
 });

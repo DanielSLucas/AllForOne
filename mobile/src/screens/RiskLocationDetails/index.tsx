@@ -1,7 +1,10 @@
 import { useRoute } from '@react-navigation/native';
 import { useEffect, useState } from 'react';
 import { ActivityIndicator, Text, View } from 'react-native';
+import { BannerAd, BannerAdSize, TestIds } from 'react-native-google-mobile-ads';
 import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
+import { SafeAreaView } from 'react-native-safe-area-context';
+
 import { RiskLocationDetailsParams } from '../../@types/navigation';
 
 import mapMarker from '../../images/mapMarker.png';
@@ -10,12 +13,14 @@ import { THEME } from '../../styles/theme';
 
 import { styles } from './styles';
 
-interface RiskLocation {
+export interface RiskLocation {
+  _id: string;
   location: {
     coordinates: [number, number];
   };
   risk: string;
-  description: string;  
+  description: string;
+  created_by: string;
 }
 
 export function RiskLocationDetails() {
@@ -46,7 +51,7 @@ export function RiskLocationDetails() {
   }
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <View style={styles.mapContainer}>
         <MapView
           initialRegion={{
@@ -81,6 +86,16 @@ export function RiskLocationDetails() {
           {riskLocation.description}
         </Text>
       </View>
-    </View>
+
+      <View style={styles.footer}>
+        <BannerAd 
+          unitId={TestIds.BANNER}
+          size={BannerAdSize.BANNER}
+          requestOptions={{
+            requestNonPersonalizedAdsOnly: true,
+          }}
+        />
+      </View>
+    </SafeAreaView>
   );
 }

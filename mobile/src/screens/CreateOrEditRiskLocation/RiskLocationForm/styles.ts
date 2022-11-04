@@ -11,10 +11,30 @@ export const styles = StyleSheet.create({
     flex: 1,
   },
 
+  header: {
+    flexDirection: 'row',
+    alignItems: 'baseline'
+  },
+
   title: {
     color: THEME.COLORS.TEXT.TITLE,
     fontFamily: THEME.FONT_FAMILY.BOLD,
-    fontSize: THEME.FONT_SIZE.LG,  
+    fontSize: THEME.FONT_SIZE.LG,
+    marginRight: 'auto'
+  },
+
+  deleteButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  
+  deleteButtonText: {
+    marginLeft: 4,
+    color: THEME.COLORS.RED,
+    fontFamily: THEME.FONT_FAMILY.REGULAR,
+    fontSize: THEME.FONT_SIZE.XSM,
+    textDecorationLine: 'underline'
   },
 
   divider: {

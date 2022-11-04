@@ -1,8 +1,9 @@
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { useState } from 'react';
-import { Alert, KeyboardAvoidingView, Platform, Text, View } from 'react-native';
+import { Alert, KeyboardAvoidingView, Platform, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ScrollView } from 'react-native-gesture-handler';
+import FeatherIcons from '@expo/vector-icons/Feather';
 
 import { useAuth } from '../../../hooks/auth';
 
@@ -13,21 +14,25 @@ import { RiskLocationFormParams } from '../../../@types/navigation';
 import { api } from '../../../services/api';
 
 import { styles } from './styles';
+import { THEME } from '../../../styles/theme';
 
 export function RiskLocationForm() {    
   const navigation = useNavigation()
   const { user } = useAuth();
   
   const route = useRoute();
-  const { position } = route.params as RiskLocationFormParams;
+  const { position, riskLocation } = route.params as RiskLocationFormParams;
 
   const [risk, setRisk] = useState('');
   const [riskError, setRiskError] = useState(false);
   const [description, setDescription] = useState('');
   const [descriptionError, setDescriptionError] = useState(false);
   
-  async function handleCreateRiskLocation() {
-    if(!risk || !description) {
+  async function handleCreateOrUpdateRiskLocation() {
+    const riskLocationRisk = riskLocation && !risk ? riskLocation.risk : risk;
+    const riskLocationDescription = riskLocation && !description ? riskLocation.description : description;
+    
+    if(!riskLocationRisk || !riskLocationDescription) {
       !risk ? setRiskError(true) : setRiskError(false);
       !description ? setDescriptionError(true) : setDescriptionError(false);
 
@@ -47,13 +52,17 @@ export function RiskLocationForm() {
         lat: position.latitude,
         long: position.longitude,
       },	
-      risk,
-      description,
-      created_by: user?._id
+      risk: riskLocationRisk,
+      description: riskLocationDescription,
+      ...(!riskLocation && { created_by: user?._id })
     };
     
     try {
-      await api.post('/riskLocation', data)
+      if (riskLocation) {
+        await api.put(`/riskLocation/${riskLocation._id}`, data)
+      } else {
+        await api.post('/riskLocation', data)
+      }
 
       navigation.navigate('riskLocationsMap');
     } catch (error: any) {
@@ -64,6 +73,31 @@ export function RiskLocationForm() {
     }    
   }
   
+  async function handleDeleteRiskLocation() {
+    Alert.alert(
+      'Excluir',
+      'Tem certeza que deseja excluir esse local de risco?',
+      [
+        { text: 'Cancelar', style: 'cancel' },
+        { 
+          text: 'Excluir', 
+          onPress: async () => {
+            try {              
+              await api.delete(`/riskLocation/${riskLocation?._id}`)
+                      
+              navigation.navigate('riskLocationsMap');
+            } catch (error: any) {
+              Alert.alert(
+                "Ocorreu um erro", 
+                error.message
+              );
+            }   
+          } 
+        },
+      ]
+    )
+  }
+
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : undefined}
@@ -77,14 +111,34 @@ export function RiskLocationForm() {
         keyboardShouldPersistTaps="never"
       >
         <SafeAreaView style={styles.content}>
-          <Text style={styles.title}>
-            Informações
-          </Text>
+          <View style={styles.header}>
+            <Text style={styles.title}>
+              Informações
+            </Text>
+
+            {riskLocation && (
+              <TouchableOpacity 
+                style={styles.deleteButton} 
+                onPress={handleDeleteRiskLocation}
+              >
+                <FeatherIcons 
+                  name="trash-2"
+                  size={16} 
+                  color={THEME.COLORS.RED}
+                />
+
+                <Text style={styles.deleteButtonText}>
+                  Excluir
+                </Text>
+              </TouchableOpacity>
+            )}
+          </View>
 
           <View style={styles.divider} />
           
           <Input 
             label='Risco'
+            defaultValue={riskLocation?.risk}
             error={riskError}
             maxLength={30}
             complementaryText='Máximo de 30 caracteres'
@@ -94,6 +148,7 @@ export function RiskLocationForm() {
 
           <Input 
             label='Descrição'
+            defaultValue={riskLocation?.description}
             error={descriptionError}
             maxLength={200}
             multiline
@@ -104,8 +159,8 @@ export function RiskLocationForm() {
             containerStyle={styles.textAreaContainer}          
           />
 
-          <Button style={styles.createButton} onPressFunc={handleCreateRiskLocation}>
-            Cadastrar
+          <Button style={styles.createButton} onPressFunc={handleCreateOrUpdateRiskLocation}>
+            {riskLocation ? 'Atualizar' : 'Cadastrar'}
           </Button>
         </SafeAreaView>
       </ScrollView>

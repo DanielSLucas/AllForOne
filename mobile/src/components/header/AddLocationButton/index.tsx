@@ -40,7 +40,7 @@ export function AddLocationButton() {
       return;
     }
     
-    navigation.navigate('selectMapPosition');
+    navigation.navigate('selectMapPosition', {});
   }
   
   return (

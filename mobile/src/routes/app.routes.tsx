@@ -3,9 +3,9 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { FirstSteps } from '../screens/FirstSteps';
 import { Forum } from '../screens/Forum';
 import { RiskLocationDetails } from '../screens/RiskLocationDetails';
-import { RiskLocationForm } from '../screens/CreateRiskLocation/RiskLocationForm';
+import { RiskLocationForm } from '../screens/CreateOrEditRiskLocation/RiskLocationForm';
 import { RiskLocationsMap } from '../screens/RiskLocationsMap';
-import { SelectMapPosition } from '../screens/CreateRiskLocation/SelectMapPosition';
+import { SelectMapPosition } from '../screens/CreateOrEditRiskLocation/SelectMapPosition';
 import { SignIn } from '../screens/SignIn';
 import { SignUp } from '../screens/SignUp';
 
@@ -15,6 +15,7 @@ import { BurguerMenuButton } from '../components/header/BurguerMenuButton';
 import { CancelButton } from '../components/header/CancelButton';
 import { HeaderTitle } from '../components/header/HeaderTitle';
 import { Profile } from '../screens/Profile';
+import { EditLocationButton } from '../components/header/EditLocationButton';
 
 const { Navigator, Screen } = createNativeStackNavigator();
 
@@ -73,6 +74,7 @@ export function AppRoutes() {
           headerTitleAlign: "center",
           headerLeft: () => <BackButton />,
           headerTitle: (props) => <HeaderTitle {...props} title="Local de risco"/>,
+          headerRight: () => <EditLocationButton />
         }}
       />
 
