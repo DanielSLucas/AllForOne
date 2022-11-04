@@ -6,15 +6,36 @@ import { useNavigation } from '@react-navigation/native';
 import { useAuth } from '../../../hooks/auth';
 
 export function AddLocationButton() {
-  const { user } = useAuth();
+  const { user, signOut, isSessionExpired } = useAuth();
   const navigation = useNavigation();
 
-  function handlePress() {
+  async function handlePress() {
     if(!user) {
       Alert.alert(
         "Usuário não encontrado!",
         "Você precisa estar logado para poder criar um novo local de risco."
       );
+
+      return;
+    }
+
+    const sessionExpired = await isSessionExpired();
+    
+    if (sessionExpired) {
+      Alert.alert(
+        "Sessão expirada",
+        "Por favor, faça login novamente."
+      );
+      
+      try {
+        await signOut()
+        navigation.navigate('firstSteps');
+      } catch (error: any) {
+        Alert.alert(
+          "Ocorreu um erro", 
+          error.message
+        );
+      };
 
       return;
     }

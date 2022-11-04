@@ -23,7 +23,7 @@ import { styles } from './styles';
 import { THEME } from '../../styles/theme';
 
 export function Profile() {
-  const { user, signOut } = useAuth();
+  const { user, signOut, isSessionExpired } = useAuth();
   const navigation = useNavigation();
 
   const cellphoneInputRef = useRef<TextInput>(null);  
@@ -57,6 +57,19 @@ export function Profile() {
       name: userName,
       cellphone: userCellphone.replace(/\D/g,''),
     }    
+
+    const sessionExpired = await isSessionExpired();
+    
+    if (sessionExpired) {
+      Alert.alert(
+        "Sessão expirada",
+        "Por favor, faça login novamente."
+      );
+      
+      handleSignOut();
+
+      return;
+    }
 
     try {
       await api.put(`/users/${user?._id}`, data);

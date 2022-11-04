@@ -1,7 +1,8 @@
 import { useNavigation } from '@react-navigation/native';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { View } from 'react-native';
 import MapView, { MapEvent, Marker, PROVIDER_GOOGLE } from 'react-native-maps';
+import * as Location from 'expo-location';
 
 import { Button } from '../../../components/Button';
 
@@ -10,6 +11,7 @@ import mapMarker from '../../../images/mapMarker.png';
 import { styles } from './styles';
 
 export function SelectMapPosition() {
+  const mapRef=  useRef<MapView>(null);
   const navigation = useNavigation();
   const [position, setPosition] = useState({
     latitude: 0,
@@ -24,16 +26,30 @@ export function SelectMapPosition() {
     setPosition(event.nativeEvent.coordinate);
   };
   
+  useEffect(() => {    
+    (async function navigateToCurrentLocation () {     
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== 'granted') {        
+        return;
+      }
+      
+      let currentPosition = await Location.getCurrentPositionAsync({});    
+
+      mapRef.current?.animateCamera({
+        center: {
+          latitude: currentPosition.coords.latitude,
+          longitude: currentPosition.coords.longitude,
+        },
+        zoom: 15
+      });
+    })();
+  }, []);
+
   return (
     <View style={styles.container}>
       <MapView
+        ref={mapRef}
         provider={PROVIDER_GOOGLE}
-        initialRegion={{
-          latitude: -22.7825015,
-          longitude: -45.1684859,
-          latitudeDelta: 0.008,
-          longitudeDelta: 0.008,
-        }}
         style={styles.mapStyle}
         onPress={handleSelectMapPosition}
       >

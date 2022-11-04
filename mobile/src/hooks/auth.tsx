@@ -29,6 +29,7 @@ interface AuthContextData {
   signOut(): Promise<void>;
   updateUser(user: User): Promise<void>;
   setLoading(isLoading: boolean): void;
+  isSessionExpired(): Promise<boolean>;
 }
 
 export const AuthContext = createContext<AuthContextData>(
@@ -118,6 +119,16 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     setIsLoading(isLoading);
   }
 
+  async function isSessionExpired(): Promise<boolean> {
+    try {
+      await api.get(`/users/${data.user?._id}`);
+
+      return false;
+    } catch (error: any) {      
+      return true;      
+    }
+  }
+
   return (
     <AuthContext.Provider value={{ 
       user: data.user, 
@@ -127,6 +138,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       isLoading, 
       setLoading,
       sendOtp,
+      isSessionExpired,
     }}>
       {children}
     </AuthContext.Provider>
