@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Platform, Text, View } from 'react-native';
+import { Alert, Platform, Text, View } from 'react-native';
 import { Link, useNavigation } from '@react-navigation/native';
 
 import { useAuth } from '../../../hooks/auth';
@@ -22,12 +22,23 @@ export function LoginForm() {
     if(canSendOtp.success) {
       navigation.navigate('signIn', {
         cellphone,
-      });  
-    } else {      
+      });
+      return;
+    }
+
+    if (canSendOtp.response.statusCode === 404) {
       navigation.navigate('signUp', {
         cellphone,
       });
+      return;
     }
+      
+    Alert.alert(
+      "Erro",
+      Array.isArray(canSendOtp.response.message) 
+        ? canSendOtp.response.message.join('\n')
+        : canSendOtp.response.message
+    );
   }
 
   return (

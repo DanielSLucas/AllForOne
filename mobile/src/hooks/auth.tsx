@@ -2,6 +2,7 @@ import React, { createContext, useCallback, useState, useContext, useEffect, Rea
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { api } from '../services/api';
+import { AxiosError } from 'axios';
 
 interface SignInCredentials {
   username: string;
@@ -23,7 +24,7 @@ interface User {
 interface AuthContextData {
   user: User | null;
   isLoading: boolean;
-  sendOtp(cellphone: string): Promise<{ success: boolean }>
+  sendOtp(cellphone: string): Promise<{ success: boolean, response?: any }>
   signIn(credentials: SignInCredentials): Promise<void>;
   signOut(): Promise<void>;
   updateUser(user: User): Promise<void>;
@@ -70,8 +71,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       });
 
       return { success: true };
-    } catch {      
-      return { success: false };
+    } catch (err: any) {                  
+      return { success: false, response: err.response.data };
     }    
   }
 

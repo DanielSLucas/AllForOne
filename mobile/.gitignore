@@ -79,3 +79,5 @@ android
 ios
 index.js
 metro.config.js
+
+*.apk

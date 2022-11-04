@@ -99,17 +99,10 @@ export function RiskLocationsMap() {
       const plusOrMinus = () => Math.random() < 0.5 ? -1 : 1;
       const distance = (delta: number) => (Math.random() * delta)/4;
 
-      const newLocation = {
+      setMapAdLocation({
         latitude: region.latitude + (plusOrMinus() * distance(region.latitudeDelta)),
         longitude: region.longitude + (plusOrMinus() * distance(region.longitudeDelta)),
-      }
-
-      console.log({
-        region,
-        newLocation
-      })
-
-      setMapAdLocation(newLocation);
+      });
     }, 2000) 
   ).current;
 
