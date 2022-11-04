@@ -4,7 +4,7 @@ import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import MapView, { PROVIDER_GOOGLE, Region } from 'react-native-maps';
 import * as Location from 'expo-location';
 import { SafeAreaView } from 'react-native-safe-area-context';
-// import { useInterstitialAd, TestIds } from 'react-native-google-mobile-ads';
+import { useInterstitialAd, TestIds } from 'react-native-google-mobile-ads';
 import { debounce } from 'lodash';
 
 import { BuguerMenu } from '../../components/BuguerMenu';
@@ -26,9 +26,9 @@ interface RiskLocation {
 }
 
 export function RiskLocationsMap() {  
-  // const { isLoaded, load, show } = useInterstitialAd(TestIds.INTERSTITIAL, {
-  //   requestNonPersonalizedAdsOnly: true,
-  // });
+  const { isLoaded, load, isClosed, show } = useInterstitialAd(TestIds.INTERSTITIAL, {
+    requestNonPersonalizedAdsOnly: true,
+  });  
   const navigation = useNavigation();
   const mapRef=  useRef<MapView>(null);
 
@@ -39,7 +39,10 @@ export function RiskLocationsMap() {
   });
 
   useEffect(() => {
-    // load();
+    load();
+  }, [load, isClosed])
+
+  useEffect(() => {    
     (async function navigateToCurrentLocation () {     
       let { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== 'granted') {        
@@ -81,11 +84,10 @@ export function RiskLocationsMap() {
     });
   }
 
-  async function openAd () {
-    console.log('Show Ad!');
-    // if (isLoaded) {
-    //   show();
-    // }
+  async function openAd () {    
+    if (isLoaded) {
+      show();
+    }    
   }
 
   async function handleChangeRegion(region: Region) {
@@ -95,11 +97,19 @@ export function RiskLocationsMap() {
   const deboucedRegionChange = useRef(
     debounce((region: Region) => {
       const plusOrMinus = () => Math.random() < 0.5 ? -1 : 1;
+      const distance = (delta: number) => (Math.random() * delta)/4;
 
-      setMapAdLocation({
-        latitude: region.latitude + (plusOrMinus() * 0.000004),
-        longitude: region.longitude + (plusOrMinus() * 0.000004),
-      });
+      const newLocation = {
+        latitude: region.latitude + (plusOrMinus() * distance(region.latitudeDelta)),
+        longitude: region.longitude + (plusOrMinus() * distance(region.longitudeDelta)),
+      }
+
+      console.log({
+        region,
+        newLocation
+      })
+
+      setMapAdLocation(newLocation);
     }, 2000) 
   ).current;
 
@@ -118,20 +128,22 @@ export function RiskLocationsMap() {
         style={styles.map}
         onRegionChange={handleChangeRegion}        
       >
-        <CustomMapMarker          
-          icon={mapAdMarker}
-          data={{
-            _id: 'ad',
-            location: {
-              coordinates: [
-                mapAdLocation.latitude, 
-                mapAdLocation.longitude
-              ]
-            },
-            calloutText: "Ajude-nos"
-          }}
-          onCalloutPress={openAd}
-        />
+        {isLoaded && (
+          <CustomMapMarker          
+            icon={mapAdMarker}
+            data={{
+              _id: 'ad',
+              location: {
+                coordinates: [
+                  mapAdLocation.latitude, 
+                  mapAdLocation.longitude
+                ]
+              },
+              calloutText: "Ajude-nos"
+            }}
+            onCalloutPress={openAd}
+          />
+        )}
 
         {riskLocations.map(riskLocation => (
           <CustomMapMarker
@@ -144,7 +156,9 @@ export function RiskLocationsMap() {
       </MapView>
       
       <TouchableOpacity style={styles.callForHelpButton} onPress={handleCallForHelp}>
-        <Text style={styles.callForHelpButtonText}>Preciso de ajuda!</Text>
+        <Text style={styles.callForHelpButtonText}>
+          Preciso de ajuda
+        </Text>
       </TouchableOpacity>
       
     </SafeAreaView>

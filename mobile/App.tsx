@@ -1,4 +1,3 @@
-// import mobileAds from 'react-native-google-mobile-ads';
 import React, { useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import * as SplashScreen from 'expo-splash-screen';
@@ -23,14 +22,6 @@ export default function App() {
     Nunito_700Bold, 
     Nunito_800ExtraBold,
   });  
-  
-  // useEffect(() => {
-  //   mobileAds()
-  //   .initialize()
-  //   .then(adapterStatuses => {
-  //     console.log(adapterStatuses)
-  //   });
-  // }, []);
 
   useEffect(() => {    
     if (fontsLoaded) {      

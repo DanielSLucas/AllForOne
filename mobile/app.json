@@ -18,21 +18,31 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.danielslucas.allForOne"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#C64063"
       },
-      "package": "com.danielslucas.allForOne"
+      "package": "com.danielslucas.allForOne",
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyCUFqy9JCJhf5ADDiSNOpKqmrdEBcgjNDU"
+        }
+      }
     },
     "web": {
       "favicon": "./assets/icon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "298c4bac-9ec4-4248-8df5-5708294c0cf3"
+      }
     }
   },
   "react-native-google-mobile-ads": {
-    "android_app_id": "ca-app-pub-3940256099942544~3347511713", // test-id, change it!
-    "ios_app_id": "ca-app-pub-3940256099942544~1458002511" // test-id, change it!
+    "android_app_id": "ca-app-pub-8830877957747365~7300238731"
   }
 }
