@@ -17,7 +17,7 @@ import { UpdateRiskLocationDTO } from './dtos/update-risk-location.dto';
 export class RiskLocationsService {
   constructor(
     @InjectModel(RiskLocation.name)
-    private RiskLocationModel: Model<RiskLocationDocument>,
+    private riskLocationModel: Model<RiskLocationDocument>,
     private usersService: UsersService,
   ) {}
 
@@ -29,7 +29,7 @@ export class RiskLocationsService {
   }: CreateRiskLocationDTO): Promise<RiskLocationDocument> {
     await this.usersService.findById(created_by);
 
-    const createdRiskLocation = new this.RiskLocationModel({
+    const createdRiskLocation = new this.riskLocationModel({
       location: new PointLocation(coords),
       risk,
       description,
@@ -57,7 +57,7 @@ export class RiskLocationsService {
       ...updatePayload,
     };
 
-    await this.RiskLocationModel.updateOne(
+    await this.riskLocationModel.updateOne(
       {
         _id: id,
       },
@@ -67,8 +67,18 @@ export class RiskLocationsService {
     return newRiskLocation;
   }
 
+  async delete(id: string): Promise<any> {
+    await this.findById(id);
+
+    await this.riskLocationModel.deleteOne({
+      _id: id,
+    });
+
+    return;
+  }
+
   async findById(id: string): Promise<RiskLocationDocument> {
-    const riskLocation = await this.RiskLocationModel.findOne({
+    const riskLocation = await this.riskLocationModel.findOne({
       _id: id,
     });
 
@@ -78,7 +88,7 @@ export class RiskLocationsService {
   }
 
   async findAll(): Promise<RiskLocationDocument[]> {
-    return this.RiskLocationModel.find();
+    return this.riskLocationModel.find();
   }
 
   async findNearTo({
@@ -87,7 +97,7 @@ export class RiskLocationsService {
   }: SearchNearToDTO): Promise<RiskLocationDocument[]> {
     const [lat, long] = coords.split(',').map(Number);
 
-    return this.RiskLocationModel.find({
+    return this.riskLocationModel.find({
       location: {
         $nearSphere: {
           $geometry: {

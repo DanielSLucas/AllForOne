@@ -1,7 +1,10 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
+  HttpCode,
+  HttpStatus,
   Param,
   Post,
   Put,
@@ -38,6 +41,13 @@ export class RiskLocationsController {
     @Body() updateRiskLocationDTO: UpdateRiskLocationDTO,
   ): Promise<RiskLocation> {
     return this.riskLocationsService.update(id, updateRiskLocationDTO);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Delete(':id')
+  @HttpCode(HttpStatus.NO_CONTENT)
+  async delete(@Param('id') id: string) {
+    return this.riskLocationsService.delete(id);
   }
 
   @Get()
