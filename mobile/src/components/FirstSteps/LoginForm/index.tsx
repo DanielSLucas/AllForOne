@@ -34,10 +34,8 @@ export function LoginForm() {
     }
       
     Alert.alert(
-      "Erro",
-      Array.isArray(canSendOtp.response.message) 
-        ? canSendOtp.response.message.join('\n')
-        : canSendOtp.response.message
+      "Celular inválido",
+      "Por favor, informe um número de celular válido: (xx)9xxxx-xxxx."
     );
   }
 
