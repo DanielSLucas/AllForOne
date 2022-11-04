@@ -11,6 +11,7 @@ import {
 import { CreateRiskLocationDTO } from './dtos/create-risk-location.dto';
 import { SearchNearToDTO } from './dtos/search-near-to.dto';
 import { UsersService } from 'src/users/users.service';
+import { UpdateRiskLocationDTO } from './dtos/update-risk-location.dto';
 
 @Injectable()
 export class RiskLocationsService {
@@ -36,6 +37,34 @@ export class RiskLocationsService {
     });
 
     return createdRiskLocation.save();
+  }
+
+  async update(
+    id: string,
+    { coords, description, risk }: UpdateRiskLocationDTO,
+  ): Promise<RiskLocation> {
+    const riskLocation = await this.findById(id);
+
+    const updatePayload = {
+      location: new PointLocation(coords),
+      risk,
+      description,
+    };
+
+    const newRiskLocation = {
+      _id: riskLocation._id,
+      created_by: riskLocation.created_by,
+      ...updatePayload,
+    };
+
+    await this.RiskLocationModel.updateOne(
+      {
+        _id: id,
+      },
+      updatePayload,
+    );
+
+    return newRiskLocation;
   }
 
   async findById(id: string): Promise<RiskLocationDocument> {

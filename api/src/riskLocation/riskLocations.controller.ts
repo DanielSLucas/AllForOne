@@ -4,6 +4,7 @@ import {
   Get,
   Param,
   Post,
+  Put,
   Query,
   UseGuards,
 } from '@nestjs/common';
@@ -11,8 +12,12 @@ import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 
 import { CreateRiskLocationDTO } from './dtos/create-risk-location.dto';
 import { SearchNearToDTO } from './dtos/search-near-to.dto';
+import { UpdateRiskLocationDTO } from './dtos/update-risk-location.dto';
 import { RiskLocationsService } from './riskLocations.service';
-import { RiskLocationDocument } from './schemas/riskLocation.schema';
+import {
+  RiskLocation,
+  RiskLocationDocument,
+} from './schemas/riskLocation.schema';
 
 @Controller('riskLocation')
 export class RiskLocationsController {
@@ -24,6 +29,15 @@ export class RiskLocationsController {
     @Body() createRiskLocationDTO: CreateRiskLocationDTO,
   ): Promise<RiskLocationDocument> {
     return this.riskLocationsService.create(createRiskLocationDTO);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Put(':id')
+  async update(
+    @Param('id') id: string,
+    @Body() updateRiskLocationDTO: UpdateRiskLocationDTO,
+  ): Promise<RiskLocation> {
+    return this.riskLocationsService.update(id, updateRiskLocationDTO);
   }
 
   @Get()
