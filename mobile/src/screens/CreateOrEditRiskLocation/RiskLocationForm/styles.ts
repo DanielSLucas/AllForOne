@@ -58,6 +58,6 @@ export const styles = StyleSheet.create({
   createButton: {
     marginTop: 'auto',
     height: 56,
-    marginBottom: 80,
+    marginBottom: 16,
   },
 });

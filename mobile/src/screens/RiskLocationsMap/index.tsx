@@ -75,7 +75,7 @@ export function RiskLocationsMap() {
   })
   
   function handleCallForHelp() {
-    Linking.openURL('tel:+POLICIA')
+    Linking.openURL('tel:190')
   }  
 
   function handleNavigateToRiskLocationDetails(riskLocationId: string) {
