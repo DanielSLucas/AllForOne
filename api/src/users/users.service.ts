@@ -39,6 +39,16 @@ export class UsersService {
   async update(id: string, updateUserDTO: UpdateUserDTO): Promise<User> {
     const user = await this.findById(id);
 
+    const cellphoneAlredyInUse = await this.userModel.findOne({
+      cellphone: updateUserDTO.cellphone,
+    });
+
+    if (cellphoneAlredyInUse) {
+      throw new BadRequestException(
+        'An user with this cellphone already exists',
+      );
+    }
+
     const newUser = {
       _id: user._id,
       eula: user.eula,
