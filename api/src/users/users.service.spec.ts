@@ -93,6 +93,17 @@ describe('UsersService', () => {
 
       expect(result.cellphone).toEqual('12912344322');
     });
+
+    it("should not be able to update an user's cellphone to a cellphone number that is already in use", async () => {
+      await Promise.all(users.map((user) => usersService.create(user)));
+
+      await expect(
+        usersService.update(users[0]._id, {
+          name: users[0].name,
+          cellphone: users[1].cellphone,
+        }),
+      ).rejects.toBeInstanceOf(BadRequestException);
+    });
   });
 
   describe('delete', () => {
