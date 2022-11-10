@@ -11,7 +11,7 @@ import {
   Query,
   UseGuards,
 } from '@nestjs/common';
-import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 
 import { CreateRiskLocationDTO } from './dtos/create-risk-location.dto';
 import { SearchNearToDTO } from './dtos/search-near-to.dto';

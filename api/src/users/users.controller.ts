@@ -14,7 +14,7 @@ import {
 import { CreateUserDTO } from './dtos/create-user.dto';
 import { UsersService } from './users.service';
 import { User, UserDocument } from './schemas/user.schema';
-import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { UpdateUserDTO } from './dtos/update-user.dto';
 
 @Controller('users')
