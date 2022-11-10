@@ -1,4 +1,3 @@
-import { HttpException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { UserDocument } from './schemas/user.schema';
 import { UsersController } from './users.controller';
@@ -32,6 +31,9 @@ describe('UsersController', () => {
           useValue: {
             create: jest.fn().mockResolvedValue(users[0]),
             findAll: jest.fn().mockResolvedValue(users),
+            update: jest.fn(),
+            delete: jest.fn(),
+            findById: jest.fn().mockResolvedValue(users[0]),
           },
         },
       ],
@@ -56,25 +58,44 @@ describe('UsersController', () => {
 
       expect(result).toEqual(users[0]);
     });
+  });
 
-    it('should not be able to create an user without accepting the EULA.', async () => {
-      jest
-        .spyOn(usersService, 'create')
-        .mockRejectedValueOnce(
-          new HttpException('To sign up, EULA must be accepted.', 400),
-        );
+  describe('update', () => {
+    it("should be able to update an user's info", async () => {
+      jest.spyOn(usersService, 'update').mockResolvedValueOnce({
+        ...users[0],
+        name: 'New user name',
+      });
 
-      expect(
-        usersController.create({
-          name: 'User 1',
-          cellphone: '12912344321',
-          eula: false,
-        }),
-      ).rejects.toBeInstanceOf(HttpException);
+      const result = await usersController.update(users[0]._id, {
+        name: 'New user name',
+        cellphone: users[0].cellphone,
+      });
+
+      expect(result.name).toEqual('New user name');
     });
   });
 
-  describe('index', () => {
+  describe('delete', () => {
+    it('should be able to delete an user', async () => {
+      const deleteFunction = jest.spyOn(usersService, 'delete');
+
+      await usersController.delete('user id');
+
+      expect(deleteFunction).toHaveBeenCalledWith('user id');
+      expect(deleteFunction).not.toThrow();
+    });
+  });
+
+  describe('findById', () => {
+    it('should be able to find a user by its id', async () => {
+      const user = await usersController.findById(users[0]._id);
+
+      expect(user).toEqual(users[0]);
+    });
+  });
+
+  describe('findAll', () => {
     it('should be able to list all users.', async () => {
       const result = await usersController.findAll();
 
