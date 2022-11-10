@@ -10,7 +10,7 @@ import {
 } from './schemas/riskLocation.schema';
 import { CreateRiskLocationDTO } from './dtos/create-risk-location.dto';
 import { SearchNearToDTO } from './dtos/search-near-to.dto';
-import { UsersService } from 'src/users/users.service';
+import { UsersService } from '../users/users.service';
 import { UpdateRiskLocationDTO } from './dtos/update-risk-location.dto';
 
 @Injectable()

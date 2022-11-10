@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { UsersService } from 'src/users/users.service';
+import { UsersService } from '../users/users.service';
 import { OtpProvider } from './providers/otp/local.provider';
 import { Otp, OtpDocument } from './schemas/otp.schema';
 

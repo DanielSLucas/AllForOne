@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { UsersModule } from 'src/users/users.module';
+import { UsersModule } from '../users/users.module';
 import { OtpController } from './otp.controller';
 import { OtpService } from './otp.service';
 import { OtpProvider } from './providers/otp/local.provider';

@@ -5,9 +5,9 @@ import {
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
-import { OtpService } from 'src/otp/otp.service';
-import { UserDocument } from 'src/users/schemas/user.schema';
-import { UsersService } from 'src/users/users.service';
+import { OtpService } from '../otp/otp.service';
+import { UserDocument } from '../users/schemas/user.schema';
+import { UsersService } from '../users/users.service';
 
 @Injectable()
 export class AuthService {
