@@ -61,7 +61,7 @@ describe('UsersService', () => {
       expect(result).toHaveProperty('eula');
     });
 
-    it('should not be able to create an user without accepting the EULA.', async () => {
+    it('should not be able to create a user without accepting the EULA.', async () => {
       const createFunc = jest.spyOn(usersModel, 'create');
 
       expect(
@@ -94,7 +94,7 @@ describe('UsersService', () => {
       expect(result.cellphone).toEqual('12912344322');
     });
 
-    it("should not be able to update an user's cellphone to a cellphone number that is already in use", async () => {
+    it("should not be able to update a user's cellphone to a cellphone number that is already in use", async () => {
       await Promise.all(users.map((user) => usersService.create(user)));
 
       await expect(
@@ -107,7 +107,7 @@ describe('UsersService', () => {
   });
 
   describe('delete', () => {
-    it('should be able to delete an user', async () => {
+    it('should be able to delete a user', async () => {
       await usersService.create(users[0]);
 
       const usersBeforeDeletion = await usersService.findAll();
@@ -131,7 +131,7 @@ describe('UsersService', () => {
   });
 
   describe('findById', () => {
-    it('should be able to find an user by his id', async () => {
+    it('should be able to find a user by his id', async () => {
       await Promise.all(users.map((user) => usersService.create(user)));
 
       const user = await usersService.findById(users[0]._id);
@@ -147,7 +147,7 @@ describe('UsersService', () => {
   });
 
   describe('findByCellphone', () => {
-    it('should be able to find an user by his cellphone number', async () => {
+    it('should be able to find a user by his cellphone number', async () => {
       await Promise.all(users.map((user) => usersService.create(user)));
 
       const user = await usersService.findByCellphone(users[0].cellphone);

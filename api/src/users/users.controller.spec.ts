@@ -49,7 +49,7 @@ describe('UsersController', () => {
   });
 
   describe('create', () => {
-    it('should be able to create an user.', async () => {
+    it('should be able to create a user.', async () => {
       const result = await usersController.create({
         name: 'User 1',
         cellphone: '12912344321',
@@ -61,7 +61,7 @@ describe('UsersController', () => {
   });
 
   describe('update', () => {
-    it("should be able to update an user's info", async () => {
+    it("should be able to update a user's info", async () => {
       jest.spyOn(usersService, 'update').mockResolvedValueOnce({
         ...users[0],
         name: 'New user name',
@@ -77,7 +77,7 @@ describe('UsersController', () => {
   });
 
   describe('delete', () => {
-    it('should be able to delete an user', async () => {
+    it('should be able to delete a user', async () => {
       const deleteFunction = jest.spyOn(usersService, 'delete');
 
       await usersController.delete('user id');

@@ -29,7 +29,7 @@ export class UsersService {
 
     if (userExists) {
       throw new BadRequestException(
-        'An user with this cellphone already exists',
+        'A user with this cellphone already exists',
       );
     }
 
@@ -45,7 +45,7 @@ export class UsersService {
 
     if (cellphoneAlredyInUse) {
       throw new BadRequestException(
-        'An user with this cellphone already exists',
+        'A user with this cellphone already exists',
       );
     }
 
