@@ -29,14 +29,12 @@ export class RiskLocationsService {
   }: CreateRiskLocationDTO): Promise<RiskLocationDocument> {
     await this.usersService.findById(created_by);
 
-    const createdRiskLocation = new this.riskLocationModel({
+    return this.riskLocationModel.create({
       location: new PointLocation(coords),
       risk,
       description,
       created_by,
     });
-
-    return createdRiskLocation.save();
   }
 
   async update(
