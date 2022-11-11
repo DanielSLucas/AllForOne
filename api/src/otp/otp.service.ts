@@ -24,7 +24,7 @@ export class OtpService {
     await this.otpProvider.sendOTP(user.cellphone, otp.password);
   }
 
-  async findOtpByUserId(userId: string) {
+  async findOtpByUserId(userId: string): Promise<OtpDocument> {
     const otp = await this.otpModel.findOne({
       user: userId,
     });
