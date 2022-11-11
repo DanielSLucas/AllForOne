@@ -39,6 +39,18 @@ export class FakeModel<T = any> {
     this.entities.splice(entityIndex, 1);
   }
 
+  deleteMany(findOptions: Partial<T>) {
+    if (!findOptions || Object.keys(findOptions).length === 0) {
+      this.entities = [];
+    }
+
+    this.entities = this.entities.filter((entity) => {
+      return Object.keys(findOptions).reduce((acc, cur) => {
+        return acc && findOptions[cur] !== entity[cur];
+      }, true);
+    });
+  }
+
   find(findOptions?: Partial<T>) {
     if (!findOptions || Object.keys(findOptions).length === 0) {
       return this.entities;
