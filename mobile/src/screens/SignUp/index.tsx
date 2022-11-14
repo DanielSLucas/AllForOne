@@ -52,8 +52,8 @@ export function SignUp() {
     const userCellphone = cellphone ? cellphone : cellphoneInitialValue;
 
     if(!fullName || !userCellphone || !isCellphone.test(userCellphone)) {
-      !fullName && setFullNameError(true);
-      !cellphone && setCellphoneError(true);
+      !fullName ? setFullNameError(true) : setFullNameError(false);
+      !cellphone || !isCellphone.test(userCellphone) ? setCellphoneError(true) : setCellphoneError(false);
 
       Alert.alert(
         "Valor inválido!", 
