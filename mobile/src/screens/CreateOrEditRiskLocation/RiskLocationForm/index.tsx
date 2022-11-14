@@ -1,6 +1,6 @@
 import { useNavigation, useRoute } from '@react-navigation/native';
-import { useState } from 'react';
-import { Alert, KeyboardAvoidingView, Platform, Text, TouchableOpacity, View } from 'react-native';
+import { useRef, useState } from 'react';
+import { Alert, KeyboardAvoidingView, Platform, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ScrollView } from 'react-native-gesture-handler';
 import FeatherIcons from '@expo/vector-icons/Feather';
@@ -18,6 +18,7 @@ import { THEME } from '../../../styles/theme';
 
 export function RiskLocationForm() {    
   const navigation = useNavigation()
+  const descriptionInputRef = useRef<TextInput>(null);
   const { user } = useAuth();
   
   const route = useRoute();
@@ -56,7 +57,7 @@ export function RiskLocationForm() {
       description: riskLocationDescription,
       ...(!riskLocation && { created_by: user?._id })
     };
-    
+
     try {
       if (riskLocation) {
         await api.put(`/riskLocation/${riskLocation._id}`, data)
@@ -144,19 +145,24 @@ export function RiskLocationForm() {
             complementaryText='Máximo de 30 caracteres'
             value={risk}
             onChangeText={(text) => setRisk(text)}
+            returnKeyType="next"
+            onSubmitEditing={() => {
+              descriptionInputRef.current?.focus()
+            }}
           />
 
           <Input 
+            ref={descriptionInputRef}
             label='Descrição'
             defaultValue={riskLocation?.description}
             error={descriptionError}
-            maxLength={200}
+            maxLength={150}
             multiline
             value={description}
             onChangeText={(text) => setDescription(text)}
-            complementaryText='Máximo de 200 caracteres'
+            complementaryText='Máximo de 150 caracteres'
             style={styles.textArea} 
-            containerStyle={styles.textAreaContainer}          
+            containerStyle={styles.textAreaContainer}
           />
 
           <Button style={styles.createButton} onPressFunc={handleCreateOrUpdateRiskLocation}>

@@ -1,4 +1,4 @@
-import { TouchableOpacity } from 'react-native';
+import { Alert, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import FeatherIcons from '@expo/vector-icons/Feather';
 
@@ -8,7 +8,17 @@ export function CancelButton() {
   const navigation = useNavigation();
 
   function handlePress() {
-    navigation.navigate('riskLocationsMap');
+    Alert.alert(
+      'Cancelar',
+      'Tem certeza que deseja cancelar a criação/edição desse local de risco?',
+      [
+        { text: 'Voltar', style: 'cancel' },
+        { 
+          text: 'Sim', 
+          onPress: () => navigation.navigate('riskLocationsMap') 
+        },
+      ]
+    )    
   }
   
   return (
