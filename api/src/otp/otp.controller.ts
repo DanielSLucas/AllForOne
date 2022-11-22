@@ -1,7 +1,9 @@
 import { Body, Controller, Delete, Post, Query } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { CreateOtpDTO } from './dtos/create-otp.dto';
 import { OtpService } from './otp.service';
 
+@ApiTags('OTP')
 @Controller('otp')
 export class OtpController {
   constructor(private otpService: OtpService) {}

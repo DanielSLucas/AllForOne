@@ -11,6 +11,7 @@ import {
   Query,
   UseGuards,
 } from '@nestjs/common';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 
 import { CreateRiskLocationDTO } from './dtos/create-risk-location.dto';
@@ -22,10 +23,12 @@ import {
   RiskLocationDocument,
 } from './schemas/riskLocation.schema';
 
+@ApiTags('Risk Location')
 @Controller('riskLocation')
 export class RiskLocationsController {
   constructor(private riskLocationsService: RiskLocationsService) {}
 
+  @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
   @Post()
   async create(
@@ -34,6 +37,7 @@ export class RiskLocationsController {
     return this.riskLocationsService.create(createRiskLocationDTO);
   }
 
+  @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
   @Put(':id')
   async update(
@@ -43,6 +47,7 @@ export class RiskLocationsController {
     return this.riskLocationsService.update(id, updateRiskLocationDTO);
   }
 
+  @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
   @Delete(':id')
   @HttpCode(HttpStatus.NO_CONTENT)
