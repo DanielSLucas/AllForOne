@@ -29,7 +29,7 @@
       "package": "com.danielslucas.allForOne",
       "config": {
         "googleMaps": {
-          "apiKey": "AIzaSyCUFqy9JCJhf5ADDiSNOpKqmrdEBcgjNDU"
+          "apiKey": ""
         }
       }
     },
@@ -38,11 +38,11 @@
     },
     "extra": {
       "eas": {
-        "projectId": "298c4bac-9ec4-4248-8df5-5708294c0cf3"
+        "projectId": ""
       }
     }
   },
   "react-native-google-mobile-ads": {
-    "android_app_id": "ca-app-pub-8830877957747365~7300238731"
+    "android_app_id": ""
   }
 }
