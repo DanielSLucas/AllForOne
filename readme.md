@@ -34,6 +34,9 @@ de perigo.
 - Acolhimento
   - *Link externo para um site com o qual não temos ligação, mas que oferece 
   ajuda a mulheres. ([Mapa do acolhimento](https://www.queroseracolhida.mapadoacolhimento.org))
+- Propagandas para ajudar a manter o app
+  - Interstitial ad, propaganda de tela cheia que aparece em destaque no mapa e está sempre visível em tela, mesmo que o mapa seja movido
+  - Banner ad, propaganda no canto inferior da tela
 
 ## Tecnologias
 
