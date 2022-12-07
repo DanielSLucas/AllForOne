@@ -34,9 +34,10 @@ de perigo.
 - Acolhimento
   - *Link externo para um site com o qual não temos ligação, mas que oferece 
   ajuda a mulheres. ([Mapa do acolhimento](https://www.queroseracolhida.mapadoacolhimento.org))
-- Propagandas para ajudar a manter o app
+- Propagandas
   - Interstitial ad, propaganda de tela cheia que aparece em destaque no mapa e está sempre visível em tela, mesmo que o mapa seja movido
   - Banner ad, propaganda no canto inferior da tela
+  - *As propagandas tem o intuito de ajudar a manter o app
 
 ## Tecnologias
 
@@ -59,4 +60,4 @@ Projeto idealizado por um grupo de graduandos em administração e desenvolvido
 por mim e outros graduandos de engenharia de computação na UNISAL no ano de 2022.
 
 *Você pode ver vídeos do app funcionando e saber quem fez parte desse projeto 
-nesse post no linkedIn.
+[nesse post no linkedIn](https://www.linkedin.com/posts/daniel-lucas-santos_computaaexaeto-react-github-activity-7006275309272469505-pzvF?utm_source=share&utm_medium=member_desktop). 
